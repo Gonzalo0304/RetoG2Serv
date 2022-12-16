@@ -43,7 +43,7 @@ public class Receta implements Serializable{
      * @associates <{g2.AlimentoReceta}>
      */
     @OneToMany(mappedBy = "receta")
-    private List<Alimento> listaAlimento;   
+    private List<AlimentoReceta> listaAlimento;   
 
     /**
      * @associates <{g2.Dieta}>
@@ -95,11 +95,11 @@ public class Receta implements Serializable{
     }
 
     @XmlTransient
-    public List<Alimento> getListaAlimento() {
+    public List<AlimentoReceta> getListaAlimento() {
         return listaAlimento;
     }
 
-    public void setListaAlimento(List<Alimento> listaAlimento) {
+    public void setListaAlimento(List<AlimentoReceta> listaAlimento) {
         this.listaAlimento = listaAlimento;
     }
 

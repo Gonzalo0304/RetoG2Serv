@@ -41,7 +41,7 @@ public class Cliente extends Usuario {
      * @associates <{uml.ClienteDieta}>
      */
     @OneToMany(mappedBy = "cliente")
-    private Set <Dieta> listaDieta;
+    private Set <ClienteDieta> listaDieta;
     @ManyToOne
     private Dietista dietista;
     @ManyToOne
@@ -88,11 +88,11 @@ public class Cliente extends Usuario {
     }
 
     @XmlTransient
-    public Set<Dieta> getListaDieta() {
+    public Set<ClienteDieta> getListaDieta() {
         return listaDieta;
     }
 
-    public void setListaDieta(Set<Dieta> listaDieta) {
+    public void setListaDieta(Set<ClienteDieta> listaDieta) {
         this.listaDieta = listaDieta;
     }
 

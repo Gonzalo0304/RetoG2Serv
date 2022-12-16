@@ -53,7 +53,7 @@ public class Dieta implements Serializable{
      * @associates <{uml.ClienteDieta}>
      */
     @OneToMany(mappedBy = "dieta")
-    private Set <Cliente> listaCliente;
+    private Set <ClienteDieta> listaCliente;
 
     public Dieta() {
         super();
@@ -109,11 +109,11 @@ public class Dieta implements Serializable{
     }
 
     @XmlTransient
-    public Set <Cliente> getListaCliente() {
+    public Set <ClienteDieta> getListaCliente() {
         return listaCliente;
     }
 
-    public void setListaCliente(Set <Cliente> listaCliente) {
+    public void setListaCliente(Set <ClienteDieta> listaCliente) {
         this.listaCliente = listaCliente;
     }
     @Override
