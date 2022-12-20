@@ -5,8 +5,8 @@
  */
 package service;
 
-import Entities.ClienteDieta;
-import Entities.CltDietID;
+import entities.ClienteDieta;
+import entities.CltDietID;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,7 +24,7 @@ import javax.ws.rs.core.PathSegment;
 
 /**
  *
- * @author Gonzalo
+ * @author josue
  */
 @Stateless
 @Path("entities.clientedieta")
@@ -41,7 +41,7 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
          */
-        Entities.CltDietID key = new Entities.CltDietID();
+        entities.CltDietID key = new entities.CltDietID();
         javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
         java.util.List<String> idClte = map.get("idClte");
         if (idClte != null && !idClte.isEmpty()) {
@@ -75,7 +75,7 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") PathSegment id) {
-        Entities.CltDietID key = getPrimaryKey(id);
+        entities.CltDietID key = getPrimaryKey(id);
         super.remove(super.find(key));
     }
 
@@ -83,7 +83,7 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ClienteDieta find(@PathParam("id") PathSegment id) {
-        Entities.CltDietID key = getPrimaryKey(id);
+        entities.CltDietID key = getPrimaryKey(id);
         return super.find(key);
     }
 

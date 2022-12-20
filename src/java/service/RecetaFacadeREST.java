@@ -5,7 +5,7 @@
  */
 package service;
 
-import Entities.Receta;
+import entities.Receta;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author Gonzalo
+ * @author josue
  */
 @Stateless
 @Path("entities.receta")
