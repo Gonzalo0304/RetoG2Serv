@@ -15,6 +15,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,6 +30,28 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "ALIMENTO", schema = "nutrivago")
+@NamedQueries({
+    @NamedQuery(name="getAlimentoPorNombre", query= "SELECT * FROM ALIMENTO WHERE UPPER(NOMBRE) LIKE 'nombreAlimento'"),
+    @NamedQuery(name="getAlimentoPorTipo", query= "SELECT * FROM ALIMENTO WHERE UPPER(TIPO) LIKE 'tipoAlimento'"),
+    
+    @NamedQuery(name="getAlimentoPorCaloriasSuperior", query= "SELECT * FROM ALIMENTO WHERE CALORIAS>caloriasAlimento"),
+    @NamedQuery(name="getAlimentoPorCaloriasMinimo", query= "SELECT * FROM ALIMENTO WHERE CALORIAS<caloriasAlimento"),
+    @NamedQuery(name="getAlimentoPorCaloriasEntre", query= "SELECT * FROM ALIMENTO WHERE CALORIAS<=caloriasAlimentoMax and calorias>=caloriasAlimentoMin"),
+    
+    @NamedQuery(name="getAlimentoPorGrasasSuperior", query= "SELECT * FROM ALIMENTO WHERE GRASASTOTALES>grasasAlimento"),
+    @NamedQuery(name="getAlimentoPorGrasasMinimo", query= "SELECT * FROM ALIMENTO WHERE GRASASTOTALES<grasasAlimento"),
+    @NamedQuery(name="getAlimentoPorGrasasEntre", query= "SELECT * FROM ALIMENTO WHERE GRASASTOTALES<=grasasAlimentoMax and GRASASTOTALES>=grasasAlimentoMin"),
+
+    @NamedQuery(name="getAlimentoPorProteinasSuperior", query= "SELECT * FROM ALIMENTO WHERE PROTEINAS>proteinasAlimento"),
+    @NamedQuery(name="getAlimentoPorProteinasMinimo", query= "SELECT * FROM ALIMENTO WHERE PROTEINAS<proteinasAlimento"),
+    @NamedQuery(name="getAlimentoPorProteinasEntre", query= "SELECT * FROM ALIMENTO WHERE PROTEINAS<=proteinasAlimentoMax and PROTEINAS>=proteinasAlimentoMin"),
+
+    @NamedQuery(name="getAlimentoPorCarbohidratosSuperior", query= "SELECT * FROM ALIMENTO WHERE CARBOHIDRATOS>carbohidratosAlimento"),
+    @NamedQuery(name="getAlimentoPorCarbohidratosMinimo", query= "SELECT * FROM ALIMENTO WHERE CARBOHIDRATOS<carbohidratosAlimento"),
+    @NamedQuery(name="getAlimentoPorCarbohidratosEntre", query= "SELECT * FROM ALIMENTO WHERE CARBOHIDRATOS<=carbohidratosAlimentoMax and PROTEINAS>=carbohidratoslimentoMin"),
+
+
+})
 @XmlRootElement
 public class Alimento implements Serializable{
     @Id
