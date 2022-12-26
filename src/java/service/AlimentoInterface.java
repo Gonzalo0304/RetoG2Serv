@@ -18,6 +18,55 @@ import java.util.Collection;
  * @author josue
  */
 public interface AlimentoInterface {
+    /**
+     * Este metodo crea los alimentos que guardara en la base de datos
+     * @param alimento Es un Objeto de la entidad de Alimento que contiene datos
+     * @throws excepciones.CreateException se lanza cuando ocurre un error en la creación del objeto alimento
+     * en la base de datos
+     */
+    public void crearAlimento(Alimento alimento) throws CreateException;
+    /**
+     * Este metodo elimina los alimentos que estan creados en la base de datos
+     * @param alimento Es un Objecto de la entidad alimento que contiene los datos
+     * para eliminar de la base de Datos
+     * @throws excepciones.DeleteException se lanza cuando ocurre un error en la eliminación del objeto Alimento
+     * de la base de datos
+     */
+    public void eliminarAlimento(Alimento alimento) throws DeleteException;
+    /**
+     * Este metodo Actualiza o cambia los datos de alimentos creados en la base de datos
+     * @param alimento es un Objeto de la entidad alimento que contiene los datos
+     * para actualizarlo  de la base de datos     * 
+     * @throws excepciones.UpdateException se lanza cuando ocurre un error en la actualización del objeto Alimento
+     * en la base de datos
+     */
+    public void modificarAlimento(Alimento alimento) throws UpdateException;
+   
+     /**
+     * Este metodo busca el alimento por la id
+     * @param idAlimento Es un String
+     * @return Devuelve un Objeto entidad Alimento
+     * @throws excepciones.ReadException se lanza cuando ocurre un error en la busqueda del objeto alimento
+     * en la base de datos
+     */
+    
+     public Alimento getAlimentoPorId(String idAlimento) throws ReadException; 
+    /**
+     * Este metodo busca todos los alimentos y los guarda en una Collection
+     * @return Devuelve una Lista de la entidad Alimento
+     * @throws excepciones.ReadException se lanza cuando ocurre un error en la busqueda del objeto alimento
+     * en la base de datos
+     */
+    public Collection<Alimento> getAlimentoTodos() throws ReadException;
+    
+    /**
+     * Este metodo busca el alimento por su nombre y lo guarda en un objeto de la Entidad alimento
+     * @param nombreAlimento Un String de Alimento
+     * @return Devuelve un Objecto de la Entidad alimento
+     * @throws excepciones.ReadException se lanza cuando ocurre un error en la busqueda del objeto alimento
+     * en la base de datos
+     */
+    public Alimento getAlimentoPorNombre(String nombreAlimento) throws ReadException;
 
     /**
      * Este metodo crea los alimentos que guardara en la base de datos
