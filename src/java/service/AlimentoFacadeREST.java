@@ -6,10 +6,11 @@
 package service;
 
 import entities.Alimento;
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import excepciones.ReadException;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,74 +19,48 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author josue
  */
-@Stateless
 @Path("entities.alimento")
-public class AlimentoFacadeREST extends AbstractFacade<Alimento> {
+public class AlimentoFacadeREST{
+    @EJB
+    private AlimentoInterface ejb;
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
-
-    public AlimentoFacadeREST() {
-        super(Alimento.class);
+    
+       public AlimentoFacadeREST() {
+      
     }
-
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Alimento entity) {
-        super.create(entity);
+    
+    @GET
+    @Produces({"application/xml"})
+    public Collection<Alimento> getAlimentoTodos() {
+ 
+       Collection<Alimento> alimentos = null;
+        try {
+            alimentos= ejb.getAlimentoTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alimentos;
     }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Alimento entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
-    }
-
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Alimento find(@PathParam("id") String id) {
-        return super.find(id);
+    @Produces({"application/xml"})
+    public Alimento getAlimentoPorId(@PathParam("id") String id) {
+                Alimento alimento = null;
+                
+        try {
+            alimento= ejb.getAlimentoPorId(id);
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alimento;
     }
 
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Alimento> findAll() {
-        return super.findAll();
-    }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Alimento> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
 
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
     
 }
