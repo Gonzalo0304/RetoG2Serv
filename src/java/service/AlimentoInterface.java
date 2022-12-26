@@ -41,6 +41,23 @@ public interface AlimentoInterface {
      * en la base de datos
      */
     public void modificarAlimento(Alimento alimento) throws UpdateException;
+   
+     /**
+     * Este metodo busca el alimento por la id
+     * @param idAlimento Es un String
+     * @return Devuelve un Objeto entidad Alimento
+     * @throws excepciones.ReadException se lanza cuando ocurre un error en la busqueda del objeto alimento
+     * en la base de datos
+     */
+    
+     public Alimento getAlimentoPorId(String idAlimento) throws ReadException; 
+    /**
+     * Este metodo busca todos los alimentos y los guarda en una Collection
+     * @return Devuelve una Lista de la entidad Alimento
+     * @throws excepciones.ReadException se lanza cuando ocurre un error en la busqueda del objeto alimento
+     * en la base de datos
+     */
+    public Collection<Alimento> getAlimentoTodos() throws ReadException;
     
     /**
      * Este metodo busca el alimento por su nombre y lo guarda en un objeto de la Entidad alimento
