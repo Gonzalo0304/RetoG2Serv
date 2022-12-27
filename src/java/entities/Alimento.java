@@ -35,20 +35,19 @@ import javax.xml.bind.annotation.XmlTransient;
    @NamedQuery(name="getAlimentoPorId", query= "SELECT a FROM Alimento AS a WHERE a.idAlimento = :idAlimento"),
    @NamedQuery(name="getAlimentoTodos", query= "SELECT a FROM Alimento AS a"),
    @NamedQuery(name="getAlimentoPorNombre", query= "SELECT a FROM Alimento AS a WHERE a.nombre = :nombreAlimento"),
-  /**  @NamedQuery(name="getAlimentoPorTipo", query= "SELECT a FROM alimento AS a WHERE a.TIPO = :tipoAlimento"),
-    @NamedQuery(name="getAlimentoPorCaloriasSuperior", query= "SELECT a FROM alimento AS a WHERE a.calorias > :caloriasAlimento"),
-    @NamedQuery(name="getAlimentoPorCaloriasMinimo", query= "SELECT a FROM alimento AS a WHERE a.calorias < :caloriasAlimento"),
-    @NamedQuery(name="getAlimentoPorCaloriasEntre", query= "SELECT a FROM alimento AS a WHERE a.calorias <= :caloriasAlimentoMax and A.calorias>= :caloriasAlimentoMin"),
-    @NamedQuery(name="getAlimentoPorGrasasSuperior", query= "SELECT a FROM alimento AS a WHERE a.grasasTotales > :grasasAlimento"),
-    @NamedQuery(name="getAlimentoPorGrasasMinimo", query= "SELECT a FROM alimento AS a WHERE a.grasasTotales < :grasasAlimento"),
-    @NamedQuery(name="getAlimentoPorGrasasEntre", query= "SELECT a FROM alimento AS a WHERE a.grasasTotales <= :grasasAlimentoMax AND a.grasasTotales >= :grasasAlimentoMin"),
-    @NamedQuery(name="getAlimentoPorProteinasSuperior", query= "SELECT a FROM alimento AS a WHERE a.proteinas > :proteinasAlimento"),
-    @NamedQuery(name="getAlimentoPorProteinasMinimo", query= "SELECT a FROM alimento AS a WHERE a.proteinas < :proteinasAlimento"),
-    @NamedQuery(name="getAlimentoPorProteinasEntre", query= "SELECT a FROM alimento AS a WHERE a.proteinas <= :proteinasAlimentoMax AND a.proteinas >= :proteinasAlimentoMin"),
-    @NamedQuery(name="getAlimentoPorCarbohidratosSuperior", query= "SELECT a FROM alimento AS a WHERE a.carbohidratos > :carbohidratosAlimento"),
-    @NamedQuery(name="getAlimentoPorCarbohidratosMinimo", query= "SELECT a FROM alimento AS a WHERE a.carbohidratos < :carbohidratosAlimento"),
-    @NamedQuery(name="getAlimentoPorCarbohidratosEntre", query= "SELECT a FROM alimento AS a WHERE a.carbohidratos <= :carbohidratosAlimentoMax AND a.carbohidratos >= :carbohidratosAlimentoMin"),
-*/
+    @NamedQuery(name="getAlimentoPorTipo", query= "SELECT a FROM Alimento AS a WHERE a.TIPO = :tipoAlimento"),
+    @NamedQuery(name="getAlimentoPorCaloriasSuperior", query= "SELECT a FROM Alimento AS a WHERE a.calorias > :caloriasAlimento"),
+    @NamedQuery(name="getAlimentoPorCaloriasMinimo", query= "SELECT a FROM Alimento AS a WHERE a.calorias < :caloriasAlimento"),
+    @NamedQuery(name="getAlimentoPorCaloriasEntre", query= "SELECT a FROM Alimento AS a WHERE a.calorias <= :caloriasAlimentoMax AND a.calorias>= :caloriasAlimentoMin"),
+    @NamedQuery(name="getAlimentoPorGrasasSuperior", query= "SELECT a FROM Alimento AS a WHERE a.grasasTotales > :grasasAlimento"),
+    @NamedQuery(name="getAlimentoPorGrasasMinimo", query= "SELECT a FROM Alimento AS a WHERE a.grasasTotales < :grasasAlimento"),
+    @NamedQuery(name="getAlimentoPorGrasasEntre", query= "SELECT a FROM Alimento AS a WHERE a.grasasTotales <= :grasasAlimentoMax AND a.grasasTotales >= :grasasAlimentoMin"),
+    @NamedQuery(name="getAlimentoPorProteinasSuperior", query= "SELECT a FROM Alimento AS a WHERE a.proteinas > :proteinasAlimento"),
+    @NamedQuery(name="getAlimentoPorProteinasMinimo", query= "SELECT a FROM Alimento AS a WHERE a.proteinas < :proteinasAlimento"),
+    @NamedQuery(name="getAlimentoPorProteinasEntre", query= "SELECT a FROM Alimento AS a WHERE a.proteinas <= :proteinasAlimentoMax AND a.proteinas >= :proteinasAlimentoMin"),
+   @NamedQuery(name="getAlimentoPorCarbohidratosSuperior", query= "SELECT a FROM Alimento AS a WHERE a.carbohidratos > :carbohidratosAlimento"),
+    @NamedQuery(name="getAlimentoPorCarbohidratosMinimo", query= "SELECT a FROM Alimento AS a WHERE a.carbohidratos < :carbohidratosAlimento"),
+    @NamedQuery(name="getAlimentoPorCarbohidratosEntre", query= "SELECT a FROM Alimento AS a WHERE a.carbohidratos <= :carbohidratosAlimentoMax AND a.carbohidratos >= :carbohidratosAlimentoMin")
 })
 @XmlRootElement
 public class Alimento implements Serializable{
@@ -183,5 +182,9 @@ public class Alimento implements Serializable{
     @Override
     public String toString() {
         return "Entities.NewEntity[ id=" + idAlimento + " ]";
+    }
+
+    public void setTIPO(String tipo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
