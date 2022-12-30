@@ -27,31 +27,22 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jon
+ * @author Gonzalo
  */
 @Entity
 @Table(name = "RECETA", schema = "nutrivago")
 
-//@NamedQueries({
+@NamedQueries({
+ @NamedQuery(name="getRecetaTodos", query= "SELECT r FROM Receta AS r"),
     
-   // @NamedQuery(name = "getRecetaPorId", query = "SELECT r FROM Receta AS r WHERE r.idReceta = :idReceta")
+    @NamedQuery(name="getRecetaPorId", query= "SELECT r FROM Receta AS r WHERE r.idReceta = :idReceta")
     
-    /**
-    @NamedQuery(name = "getRecetaNombreDietista", query = "SELECT r, u FROM Receta r,Usuario u WHERE r.dietista_dni = u.dni AND u.nombre=:nombreDietista")
-    ,
-    @NamedQuery(name = "getRecetasAlfabeticamente", query = "SELECT r, u  FROM Receta r, Usuarios u WHERE r.dietista_dni = u.dni order by r.nombre asc")
-    ,
-    @NamedQuery(name = "getRecetaNombre", query = "SELECT r, u  FROM Receta r, Usuarios u WHERE r.dietista_dni = u.dni AND r.nombre=: nombreReceta")
-    ,
-    @NamedQuery(name = "getRecetaTipo", query = "SELECT r, u  FROM Receta r, Usuarios u WHERE r.dietista_dni = u.dni AND r.TIPO =:tipoReceta")
-    ,
-    @NamedQuery(name = "getRecetaFechaCreacion", query = "SELECT r, u  FROM Receta r, Usuarios u WHERE r.dietista_dni = u.dni ORDER BY r.fechaCreacion desc"),
-    **/
-//})
+
+})
+
 
 @XmlRootElement
-public class Receta implements Serializable {
-
+public class Receta implements Serializable{
     @Id
     private String idReceta;
     private String nombre;
@@ -60,24 +51,25 @@ public class Receta implements Serializable {
     private Date fechaCreacion;
     @Enumerated(EnumType.STRING)
     private TipoDieta TIPO;
-
+   
     /**
      * @associates <{g2.AlimentoReceta}>
      */
     @OneToMany(mappedBy = "receta")
-    private Collection<AlimentoReceta> listaAlimento;
+    private Collection<AlimentoReceta> listaAlimento;   
 
     /**
      * @associates <{g2.Dieta}>
      */
-    @ManyToMany(mappedBy = "listaReceta")
+    @ManyToMany(mappedBy = "listaReceta")    
     private Collection<Dieta> listaDieta;
-
+    
     /**
      * @associates <{uml.Dietista}>
      */
     @ManyToOne
     private Dietista dietista;
+
 
     public Receta() {
         super();
@@ -148,7 +140,7 @@ public class Receta implements Serializable {
     public void setDietista(Dietista dietista) {
         this.dietista = dietista;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -168,7 +160,7 @@ public class Receta implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return "Entities.NewEntity[ id=" + idReceta + " ]";
