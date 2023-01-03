@@ -15,7 +15,6 @@ import java.util.Collection;
 
 /**
  * Interfaz para EJBAlimento
- *
  * @author josue
  */
 public interface AlimentoInterface {
