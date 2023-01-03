@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -32,25 +32,41 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ALIMENTO", schema = "nutrivago")
 
 @NamedQueries({
-   @NamedQuery(name="getAlimentoPorId", query= "SELECT a FROM Alimento AS a WHERE a.idAlimento = :idAlimento"),
-   @NamedQuery(name="getAlimentoTodos", query= "SELECT a FROM Alimento AS a"),
-   @NamedQuery(name="getAlimentoPorNombre", query= "SELECT a FROM Alimento AS a WHERE a.nombre = :nombreAlimento"),
-    @NamedQuery(name="getAlimentoPorTipo", query= "SELECT a FROM Alimento AS a WHERE a.TIPO = :tipoAlimento"),
-    @NamedQuery(name="getAlimentoPorCaloriasSuperior", query= "SELECT a FROM Alimento AS a WHERE a.calorias > :caloriasAlimento"),
-    @NamedQuery(name="getAlimentoPorCaloriasMinimo", query= "SELECT a FROM Alimento AS a WHERE a.calorias < :caloriasAlimento"),
-    @NamedQuery(name="getAlimentoPorCaloriasEntre", query= "SELECT a FROM Alimento AS a WHERE a.calorias <= :caloriasAlimentoMax AND a.calorias>= :caloriasAlimentoMin"),
-    @NamedQuery(name="getAlimentoPorGrasasSuperior", query= "SELECT a FROM Alimento AS a WHERE a.grasasTotales > :grasasAlimento"),
-    @NamedQuery(name="getAlimentoPorGrasasMinimo", query= "SELECT a FROM Alimento AS a WHERE a.grasasTotales < :grasasAlimento"),
-    @NamedQuery(name="getAlimentoPorGrasasEntre", query= "SELECT a FROM Alimento AS a WHERE a.grasasTotales <= :grasasAlimentoMax AND a.grasasTotales >= :grasasAlimentoMin"),
-    @NamedQuery(name="getAlimentoPorProteinasSuperior", query= "SELECT a FROM Alimento AS a WHERE a.proteinas > :proteinasAlimento"),
-    @NamedQuery(name="getAlimentoPorProteinasMinimo", query= "SELECT a FROM Alimento AS a WHERE a.proteinas < :proteinasAlimento"),
-    @NamedQuery(name="getAlimentoPorProteinasEntre", query= "SELECT a FROM Alimento AS a WHERE a.proteinas <= :proteinasAlimentoMax AND a.proteinas >= :proteinasAlimentoMin"),
-   @NamedQuery(name="getAlimentoPorCarbohidratosSuperior", query= "SELECT a FROM Alimento AS a WHERE a.carbohidratos > :carbohidratosAlimento"),
-    @NamedQuery(name="getAlimentoPorCarbohidratosMinimo", query= "SELECT a FROM Alimento AS a WHERE a.carbohidratos < :carbohidratosAlimento"),
-    @NamedQuery(name="getAlimentoPorCarbohidratosEntre", query= "SELECT a FROM Alimento AS a WHERE a.carbohidratos <= :carbohidratosAlimentoMax AND a.carbohidratos >= :carbohidratosAlimentoMin")
+    @NamedQuery(name = "getAlimentoPorId", query = "SELECT a FROM Alimento AS a WHERE a.idAlimento = :idAlimento")
+    ,
+   @NamedQuery(name = "getAlimentoTodos", query = "SELECT a FROM Alimento AS a")
+    ,
+   @NamedQuery(name = "getAlimentoPorNombre", query = "SELECT a FROM Alimento AS a WHERE a.nombre = :nombreAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorTipo", query = "SELECT a FROM Alimento AS a WHERE a.TIPO = :tipoAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorCaloriasSuperior", query = "SELECT a FROM Alimento AS a WHERE a.calorias > :caloriasAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorCaloriasMinimo", query = "SELECT a FROM Alimento AS a WHERE a.calorias < :caloriasAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorCaloriasEntre", query = "SELECT a FROM Alimento AS a WHERE a.calorias <= :caloriasAlimentoMax AND a.calorias>= :caloriasAlimentoMin")
+    ,
+    @NamedQuery(name = "getAlimentoPorGrasasSuperior", query = "SELECT a FROM Alimento AS a WHERE a.grasasTotales > :grasasAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorGrasasMinimo", query = "SELECT a FROM Alimento AS a WHERE a.grasasTotales < :grasasAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorGrasasEntre", query = "SELECT a FROM Alimento AS a WHERE a.grasasTotales <= :grasasAlimentoMax AND a.grasasTotales >= :grasasAlimentoMin")
+    ,
+    @NamedQuery(name = "getAlimentoPorProteinasSuperior", query = "SELECT a FROM Alimento AS a WHERE a.proteinas > :proteinasAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorProteinasMinimo", query = "SELECT a FROM Alimento AS a WHERE a.proteinas < :proteinasAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorProteinasEntre", query = "SELECT a FROM Alimento AS a WHERE a.proteinas <= :proteinasAlimentoMax AND a.proteinas >= :proteinasAlimentoMin")
+    ,
+   @NamedQuery(name = "getAlimentoPorCarbohidratosSuperior", query = "SELECT a FROM Alimento AS a WHERE a.carbohidratos > :carbohidratosAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorCarbohidratosMinimo", query = "SELECT a FROM Alimento AS a WHERE a.carbohidratos < :carbohidratosAlimento")
+    ,
+    @NamedQuery(name = "getAlimentoPorCarbohidratosEntre", query = "SELECT a FROM Alimento AS a WHERE a.carbohidratos <= :carbohidratosAlimentoMax AND a.carbohidratos >= :carbohidratosAlimentoMin")
 })
 @XmlRootElement
-public class Alimento implements Serializable{
+public class Alimento implements Serializable {
+
     @Id
     private String idAlimento;
     @Enumerated(EnumType.STRING)
@@ -62,7 +78,7 @@ public class Alimento implements Serializable{
     private Float carbohidratos;
     @Temporal(TemporalType.DATE)
     private Date fechaInsert;
-    
+
     /**
      * @associates <{uml.Dietista}>
      */
@@ -72,8 +88,9 @@ public class Alimento implements Serializable{
     /**
      * @associates <{g2.AlimentoReceta}>
      */
-    @OneToMany(mappedBy = "alimento") 
+    @OneToMany(mappedBy = "alimento")
     private Collection<AlimentoReceta> listaReceta;
+
     public Alimento() {
         super();
     }
@@ -158,7 +175,7 @@ public class Alimento implements Serializable{
     public void setListaReceta(Collection<AlimentoReceta> listaReceta) {
         this.listaReceta = listaReceta;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -178,7 +195,7 @@ public class Alimento implements Serializable{
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return "Entities.NewEntity[ id=" + idAlimento + " ]";

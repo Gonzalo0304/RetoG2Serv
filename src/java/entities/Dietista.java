@@ -7,10 +7,11 @@ package entities;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,6 +26,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name="dietista",schema="nutrivago")
 @DiscriminatorValue("Dietista")
+
+@NamedQueries({
+   @NamedQuery(name="getDietistaPorDni", query= "SELECT d FROM Dietista AS d WHERE d.dni = :dni"),
+   @NamedQuery(name="getDietistaTodos", query= "SELECT d FROM Dietista AS d")
+})
 @XmlRootElement
 public class Dietista extends Usuario{
     
