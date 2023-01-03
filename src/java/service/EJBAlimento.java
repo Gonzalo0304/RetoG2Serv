@@ -58,6 +58,13 @@ public class EJBAlimento implements AlimentoInterface {
         }
     }
 
+    /**
+     * Busca un Objeto Alimento por su idAlimento en la base de Datos
+     * @param idAlimento es un String
+     * @return Devuelve un Objeto alimento con Datos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
+
     @Override
     public Alimento getAlimentoPorId(String idAlimento) throws ReadException {
         Alimento alimento;
@@ -71,6 +78,11 @@ public class EJBAlimento implements AlimentoInterface {
         return alimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento en la base de Datos
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoTodos() throws ReadException {
 
@@ -83,6 +95,13 @@ public class EJBAlimento implements AlimentoInterface {
         return alimentos;
 
     }
+
+    /**
+     * Busca una lista de todos los objetos de Alimento que tenga como atributo un nombre de alimento predeterminado
+     * @param nombreAlimento es un String
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
 
     @Override
     public Collection getAlimentoPorNombre(String nombreAlimento) throws ReadException {
@@ -97,6 +116,13 @@ public class EJBAlimento implements AlimentoInterface {
         return alimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que tenga como atributo un tipo de Alimento predeterminado
+     * @param tipoAlimento es una Enumeracion de TipoAlimento
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
+
     @Override
     public Collection<Alimento> getAlimentoPorTipo(TipoAlimento tipoAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -107,6 +133,13 @@ public class EJBAlimento implements AlimentoInterface {
         }
         return listaAlimento;
     }
+
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea superior al numero dado
+     * @param caloriasAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
 
     @Override
     public Collection<Alimento> getAlimentoPorCaloriasSuperior(Float caloriasAlimento) throws ReadException {
@@ -120,6 +153,12 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea inferior al numero dado
+     * @param caloriasAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorCaloriasMinimo(Float caloriasAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -130,6 +169,14 @@ public class EJBAlimento implements AlimentoInterface {
         }
         return listaAlimento;
     }
+
+    /**
+     * Busca una lista de todos los objetos de Alimento que este dentro de un rango de Numeros dados
+     * @param caloriasAlimentoMax es un Float
+     * @param caloriasAlimentoMin es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
 
     @Override
     public Collection<Alimento> getAlimentoPorCaloriasEntre(Float caloriasAlimentoMax, Float caloriasAlimentoMin) throws ReadException {
@@ -142,6 +189,12 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea superior al numero dado
+     * @param grasasAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorGrasasSuperior(Float grasasAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -154,6 +207,13 @@ public class EJBAlimento implements AlimentoInterface {
 
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea inferior al numero dado
+     * @param grasasAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
+
     @Override
     public Collection<Alimento> getAlimentoPorGrasasMinimo(Float grasasAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -165,6 +225,13 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que este dentro de un rango de Numeros dados
+     * @param grasasAlimentoMax es un Float
+     * @param grasasAlimentoMin es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorGrasasEntre(Float grasasAlimentoMax, Float grasasAlimentoMin) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -176,6 +243,12 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea superior al numero dado
+     * @param proteinasAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorProteinasSuperior(Float proteinasAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -187,6 +260,12 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea inferior al numero dado
+     * @param proteinasAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorProteinasMinimo(Float proteinasAlimento) throws ReadException {
 
@@ -199,6 +278,13 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que este dentro de un rango de Numeros dados
+     * @param proteinasAlimentoMax es un Float
+     * @param proteinasAlimentoMin es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorProteinasEntre(Float proteinasAlimentoMax, Float proteinasAlimentoMin) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -210,6 +296,12 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea superior al numero dado
+     * @param carbohidratosAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorCarbohidratosSuperior(Float carbohidratosAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -221,6 +313,12 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que sea inferior al numero dado
+     * @param carbohidratosAlimento es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorCarbohidratosMinimo(Float carbohidratosAlimento) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -232,6 +330,13 @@ public class EJBAlimento implements AlimentoInterface {
         return listaAlimento;
     }
 
+    /**
+     * Busca una lista de todos los objetos de Alimento que este dentro de un rango de Numeros dados
+     * @param carbohidratosAlimentoMax es un Float
+     * @param carbohidratosAlimentoMin es un Float
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<Alimento> getAlimentoPorCarbohidratosEntre(Float carbohidratosAlimentoMax, Float carbohidratosAlimentoMin) throws ReadException {
         Collection<Alimento> listaAlimento;
@@ -243,5 +348,7 @@ public class EJBAlimento implements AlimentoInterface {
         }
         return listaAlimento;
     }
+    
+
 
 }

@@ -7,10 +7,15 @@ package service;
 
 import entities.AlimRecID;
 import entities.AlimentoReceta;
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -19,21 +24,24 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
+
 
 /**
  *
  * @author josue
  */
-@Stateless
+
 @Path("entities.alimentoreceta")
-public class AlimentoRecetaFacadeREST extends AbstractFacade<AlimentoReceta> {
-
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
-
-    private AlimRecID getPrimaryKey(PathSegment pathSegment) {
+public class AlimentoRecetaFacadeREST{
+          /**
+     * EJB que Hace Referencia a AlimentoRecetaInterface
+     */
+    @EJB
+    private AlimentoRecetaInterface ejb;
+    
+    
+   // private AlimRecID getPrimaryKey(PathSegment pathSegment) {
         /*
          * pathSemgent represents a URI path segment and any associated matrix parameters.
          * URI path part is supposed to be in form of 'somePath;idAlim=idAlimValue;idRec=idRecValue'.
@@ -41,6 +49,7 @@ public class AlimentoRecetaFacadeREST extends AbstractFacade<AlimentoReceta> {
          * it is ignored in the following code.
          * Matrix parameters are used as field names to build a primary key instance.
          */
+        /**
         entities.AlimRecID key = new entities.AlimRecID();
         javax.ws.rs.core.MultivaluedMap<String, String> map = pathSegment.getMatrixParameters();
         java.util.List<String> idAlim = map.get("idAlim");
@@ -53,64 +62,69 @@ public class AlimentoRecetaFacadeREST extends AbstractFacade<AlimentoReceta> {
         }
         return key;
     }
-
-    public AlimentoRecetaFacadeREST() {
-        super(AlimentoReceta.class);
-    }
-
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(AlimentoReceta entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, AlimentoReceta entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
-        entities.AlimRecID key = getPrimaryKey(id);
-        super.remove(super.find(key));
-    }
-
+*/
+ 
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public AlimentoReceta find(@PathParam("id") PathSegment id) {
-        entities.AlimRecID key = getPrimaryKey(id);
-        return super.find(key);
-    }
+    @Produces({"application/xml"})
+    public Collection<AlimentoReceta> getAlimentoRecetaTodos() {
 
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<AlimentoReceta> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<AlimentoReceta> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        Collection<AlimentoReceta> listaAlimentoReceta = null;
+        try {
+            listaAlimentoReceta = ejb.getAlimentoRecetaTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaAlimentoReceta;
     }
     
+
+ /**   @GET
+    @Path("AlimentoReceta/{idReceta}")
+    @Produces({"application/xml"})
+    public AlimentoReceta getAlimentoRecetaPorIdReceta(@PathParam("idReceta") String idReceta) {
+        AlimentoReceta alimentoReceta = null;
+
+        try {
+            alimentoReceta = ejb.getAlimentoRecetaPorIdReceta(idReceta);
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alimentoReceta;
+    }
+*/
+
+    @POST
+    @Consumes({"application/xml"})
+    public void crearAlimentoReceta(AlimentoReceta alimentoReceta) {
+        try {
+            ejb.crearAlimentoReceta(alimentoReceta);
+        } catch (CreateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    @PUT
+    @Consumes({"application/xml"})
+    public void actualizarDietista(AlimentoReceta alimentoReceta) {
+        try {
+            ejb.modificarAlimentoReceta(alimentoReceta);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    
+    @DELETE
+    @Path("EliminarAlimentoReceta/{idReceta}")
+    @Consumes({"application/xml"})
+    public void eliminarDietista(@PathParam("idReceta") String idReceta) {
+        try {
+            ejb.eliminarAlimentoReceta(ejb.getAlimentoRecetaPorIdReceta(idReceta));
+        } catch (DeleteException | ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+ 
 }
