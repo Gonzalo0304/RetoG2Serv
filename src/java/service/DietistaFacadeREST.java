@@ -5,8 +5,17 @@
  */
 package service;
 
+import entities.Alimento;
 import entities.Dietista;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
+import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,68 +33,93 @@ import javax.ws.rs.core.MediaType;
  *
  * @author josue
  */
-@Stateless
 @Path("entities.dietista")
-public class DietistaFacadeREST extends AbstractFacade<Dietista> {
+public class DietistaFacadeREST{
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
+      /**
+     * EJB que Hace Referencia a DiestistaInterface
+     */
+    @EJB
+    private DietistaInterface ejb;
 
-    public DietistaFacadeREST() {
-        super(Dietista.class);
-    }
-
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Dietista entity) {
-        super.create(entity);
-    }
-
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Dietista entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
-    }
-
+    /**
+     *
+     * @return
+     */
     @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Dietista find(@PathParam("id") String id) {
-        return super.find(id);
-    }
+    @Produces({"application/xml"})
+    public Collection<Dietista> getDietistaTodos() {
 
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Dietista> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Dietista> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+        Collection<Dietista> dietistas = null;
+        try {
+            dietistas = ejb.getDietistaTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dietistas;
     }
     
+    /**
+     *
+     * @param dni
+     * @return
+     */
+    @GET
+    @Path("DietistaDni/{dni}")
+    @Produces({"application/xml"})
+    public Dietista getDietistaPorDni(@PathParam("dni") String dni) {
+        Dietista dietista = null;
+
+        try {
+            dietista = ejb.getDietistaPorDni(dni);
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dietista;
+    }
+
+    /**
+     *
+     * @param dietista
+     */
+    @POST
+    @Consumes({"application/xml"})
+    public void crearDietista(Dietista dietista) {
+        try {
+            ejb.crearDietista(dietista);
+        } catch (CreateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     *
+     * @param dietista
+     */
+    @PUT
+    @Consumes({"application/xml"})
+    public void actualizarDietista(Dietista dietista) {
+        try {
+            ejb.modificarDietista(dietista);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     *
+     * @param dni
+     */
+    @DELETE
+    @Path("EliminarDietista/{dni}")
+    @Consumes({"application/xml"})
+    public void eliminarDietista(@PathParam("dni") String dni) {
+        try {
+            ejb.eliminarDietista(ejb.getDietistaPorDni(dni));
+        } catch (DeleteException | ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
+  
+   
