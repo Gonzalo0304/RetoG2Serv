@@ -70,7 +70,7 @@ public class AlimentoFacadeREST {
      * @return Devuelve un objeto alimento con Datos
      */
     @GET
-    @Path("AlimentoId/{id}")
+    @Path("{id}")
     @Produces({"application/xml"})
     public Alimento getAlimentoPorId(@PathParam("id") String id) {
         Alimento alimento = null;
@@ -416,8 +416,8 @@ public class AlimentoFacadeREST {
          * @param id
          */
         @DELETE
-        @Path("EliminarAlimentoabbcd/{id}")
-        @Consumes({"application/xml"})
+        @Path("{id}")
+        //@Consumes({"application/xml"})
         public void eliminarAlimento(@PathParam("id") String id) {
             try {
                 ejb.eliminarAlimento(ejb.getAlimentoPorId(id));

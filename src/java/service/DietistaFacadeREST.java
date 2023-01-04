@@ -65,7 +65,7 @@ public class DietistaFacadeREST{
      * @return
      */
     @GET
-    @Path("DietistaDni/{dni}")
+    @Path("{dni}")
     @Produces({"application/xml"})
     public Dietista getDietistaPorDni(@PathParam("dni") String dni) {
         Dietista dietista = null;
@@ -111,8 +111,8 @@ public class DietistaFacadeREST{
      * @param dni
      */
     @DELETE
-    @Path("EliminarDietista/{dni}")
-    @Consumes({"application/xml"})
+    @Path("{dni}")
+    //@Consumes({"application/xml"})
     public void eliminarDietista(@PathParam("dni") String dni) {
         try {
             ejb.eliminarDietista(ejb.getDietistaPorDni(dni));
