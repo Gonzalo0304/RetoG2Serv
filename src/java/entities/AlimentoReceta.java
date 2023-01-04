@@ -23,8 +23,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ALIMENTORECETA", schema = "nutrivago")
 
 @NamedQueries({
-   //@NamedQuery(name="getAlimentoRecetaPorIdReceta", query= "SELECT ar FROM AlimentoReceta AS ar WHERE ar.receta_idReceta = :idReceta"),
+   //@NamedQuery(name="getAlimentoRecetaPorIdReceta", query= "SELECT ar FROM AlimentoReceta AS ar WHERE ar.idReceta = :idReceta"),
+   @NamedQuery(name="getAlimentoRecetaPorCantidad", query= "SELECT ar FROM AlimentoReceta AS ar WHERE ar.cantidad = :cantidad"),
    @NamedQuery(name="getAlimentoRecetaTodos", query= "SELECT ar FROM AlimentoReceta AS ar")
+
+
 })
 @XmlRootElement
 public class AlimentoReceta implements Serializable{
