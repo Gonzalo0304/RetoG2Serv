@@ -5,8 +5,11 @@
  */
 package entities;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +17,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,6 +32,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name="cliente",schema="nutrivago")
 @DiscriminatorValue("Cliente")
+
+@NamedQueries({
+     @NamedQuery(name="getClienteTodos", query= "SELECT c FROM Cliente AS c"),
+    @NamedQuery(name="getClientePorId", query= "SELECT c FROM Cliente AS c WHERE c.dni=:idCliente")   
+    })
+
+        
+   
+//@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 @XmlRootElement
 public class Cliente extends Usuario {
     
