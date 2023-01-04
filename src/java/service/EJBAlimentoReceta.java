@@ -21,17 +21,19 @@ import javax.persistence.PersistenceContext;
  * @author josue
  */
 @Stateless
-public class EJBAlimentoReceta implements AlimentoRecetaInterface{
+public class EJBAlimentoReceta implements AlimentoRecetaInterface {
+
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
 
     @Override
     public void crearAlimentoReceta(AlimentoReceta alimentoReceta) throws CreateException {
-       try {
+        try {
             em.persist(alimentoReceta);
         } catch (Exception e) {
             throw new CreateException(e.getMessage());
-        }    }
+        }
+    }
 
     @Override
     public void eliminarAlimentoReceta(AlimentoReceta alimentoReceta) throws DeleteException {
@@ -39,7 +41,8 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface{
             em.remove(em.merge(alimentoReceta));
         } catch (Exception e) {
             throw new DeleteException(e.getMessage());
-        }    }
+        }
+    }
 
     @Override
     public void modificarAlimentoReceta(AlimentoReceta alimentoReceta) throws UpdateException {
@@ -49,7 +52,8 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface{
             em.flush();
         } catch (Exception e) {
             throw new UpdateException(e.getMessage());
-        }    }
+        }
+    }
 
     @Override
     public AlimentoReceta getAlimentoRecetaPorIdReceta(String idReceta) throws ReadException {
@@ -61,7 +65,7 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface{
             throw new ReadException(e.getMessage());
         }
 
-        return alimentoReceta;  
+        return alimentoReceta;
     }
 
     @Override
@@ -72,7 +76,19 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface{
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
         }
-        return listaAlimentoReceta;  
+        return listaAlimentoReceta;
     }
-    
+
+    @Override
+    public Collection<AlimentoReceta> getAlimentoRecetaPorCantidad(Integer cantidad) throws ReadException {
+        Collection<AlimentoReceta> listaAlimentoRecetas = null;
+        try {
+
+            listaAlimentoRecetas = em.createNamedQuery("getAlimentoRecetaPorCantidad").setParameter("cantidad", cantidad).getResultList();
+        } catch (Exception e) {
+            throw new ReadException(e.getMessage());
+        }
+        return listaAlimentoRecetas;
+    }
+
 }
