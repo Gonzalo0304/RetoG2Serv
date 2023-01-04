@@ -54,6 +54,9 @@ public interface AlimentoRecetaInterface {
      * @throws ReadException
      */
     public Collection<AlimentoReceta> getAlimentoRecetaTodos() throws ReadException;
+    
+    
+    public Collection<AlimentoReceta> getAlimentoRecetaPorCantidad(Integer cantidad) throws ReadException;
 
     
 }

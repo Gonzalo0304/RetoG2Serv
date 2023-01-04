@@ -59,7 +59,7 @@ public class Dieta implements Serializable{
      * @associates <{uml.Receta}>
      */
     @ManyToMany
-    @JoinTable(name = "dieta_receta", schema = "nutrivago")
+    @JoinTable(name = "dietareceta", schema = "nutrivago")
     private Collection<Receta> listaReceta;
     @Enumerated(EnumType.STRING)
     private TipoDieta tipo;
