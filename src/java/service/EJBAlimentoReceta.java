@@ -56,10 +56,19 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
     }
 
     @Override
-    public AlimentoReceta getAlimentoRecetaPorIdReceta(String idReceta) throws ReadException {
-        AlimentoReceta alimentoReceta;
+    public AlimentoReceta getAlimentoRecetaPorIdRecetaIdAlimento(String idReceta , String idAlimento) throws ReadException {
+        AlimentoReceta alimentoReceta=null;
+        List<AlimentoReceta> listaAlimentoReceta = null;
         try {
-            alimentoReceta = em.find(AlimentoReceta.class, idReceta);
+
+            listaAlimentoReceta = em.createNamedQuery("getAlimentoRecetaTodos").getResultList();
+            for (int i = 0; i < listaAlimentoReceta.size(); i++) {
+                if(listaAlimentoReceta.get(i).getReceta().getIdReceta().equalsIgnoreCase(idReceta)&&listaAlimentoReceta.get(i).getAlimento().getIdAlimento().equalsIgnoreCase(idAlimento)){
+                    alimentoReceta=listaAlimentoReceta.get(i);  
+                   
+                }
+                
+            }
 
         } catch (Exception e) {
             throw new ReadException(e.getMessage());
