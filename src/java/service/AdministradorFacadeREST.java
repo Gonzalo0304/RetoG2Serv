@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author josue
+ * @author Gonzalo
  */
 @Stateless
 @Path("entities.administrador")
@@ -47,6 +47,12 @@ public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") String id, Administrador entity) {
         super.edit(entity);
+    }
+    
+    @PUT
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void edit (Administrador administrador){
+        super.edit(administrador);
     }
 
     @DELETE
