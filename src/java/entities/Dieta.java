@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,8 +28,20 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "DIETA", schema = "nutrivago")
+@NamedQueries({
+    @NamedQuery(name="getDietaTodos", query= "SELECT d FROM Dieta d"),
+    @NamedQuery(name="getDietaPorId", query= "SELECT d FROM Dieta d WHERE idDieta = :idDieta"),
+    @NamedQuery(name="getDietaPorNombre", query= "SELECT d FROM Dieta d WHERE nombre = :nombreDieta"),
+    @NamedQuery(name="getDietaPorTipo", query= "SELECT d FROM Dieta d WHERE tipo = :tipoDieta"),
+    @NamedQuery(name="getDietaPorObjetivo", query= "SELECT d FROM Dieta d WHERE Objetivo = :objetivoDieta"),
+    
+    @NamedQuery(name="getDietaPorTiempoSuperior", query= "SELECT d FROM Dieta d WHERE Tiempo>tiempoDieta"),
+    @NamedQuery(name="getDietaPorTiempoMinimo", query= "SELECT d FROM Dieta d WHERE Tiempo<tiempoDieta"),
+    @NamedQuery(name="getDietaPorTiempoEntre", query= "SELECT d FROM Dieta d WHERE Tiempo<= :tiempoDietaMax and Tiempo>= :tiempoDietaMin"),
+})
 @XmlRootElement
 public class Dieta implements Serializable{
+    
     @Id
     private String idDieta;
     private String nombre;
