@@ -46,7 +46,7 @@ public interface AlimentoRecetaInterface {
      * @return
      * @throws ReadException
      */
-    public AlimentoReceta getAlimentoRecetaPorIdReceta(String idReceta) throws ReadException;
+    public AlimentoReceta getAlimentoRecetaPorIdRecetaIdAlimento(String idReceta, String idAlimento) throws ReadException;
 
     /**
      *

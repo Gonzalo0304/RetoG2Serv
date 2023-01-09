@@ -75,16 +75,18 @@ public class AlimentoRecetaFacadeREST {
     }
 
     
-     @GET @Path("{idReceta}")
+     @GET @Path("{idReceta}/{idAlimento}")
      @Produces({"application/xml"}) public AlimentoReceta
-     getAlimentoRecetaPorIdReceta(@PathParam("idReceta") String idReceta) {
+     getAlimentoRecetaPorIdReceta(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
      AlimentoReceta alimentoReceta = null;
     
-     try { alimentoReceta = ejb.getAlimentoRecetaPorIdReceta(idReceta); 
+     try { 
+         alimentoReceta = ejb.getAlimentoRecetaPorIdRecetaIdAlimento(idReceta, idAlimento); 
      }
      catch (ReadException ex) {
      Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex); 
-     } return alimentoReceta; }
+     } return alimentoReceta; 
+     }
      
    
     
