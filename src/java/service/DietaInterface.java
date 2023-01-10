@@ -15,7 +15,7 @@ import excepciones.UpdateException;
 import java.util.Collection;
 
 /**
- * Interfaz pra EJBDieta
+ * Interfaz para EJBDieta
  * @author Gonzalo
  */
 public interface DietaInterface {

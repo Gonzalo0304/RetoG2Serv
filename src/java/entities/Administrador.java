@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,6 +22,9 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name="administrador",schema="nutrivago")
+@NamedQueries({
+    @NamedQuery(name="getAdminTodos", query= "SELECT a FROM Administrador a"),
+})
 @DiscriminatorValue("Administrador")
 @XmlRootElement
 public class Administrador extends Usuario {

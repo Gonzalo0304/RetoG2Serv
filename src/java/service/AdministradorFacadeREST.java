@@ -6,7 +6,15 @@
 package service;
 
 import entities.Administrador;
+import entities.Cliente;
+import entities.Dietista;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,23 +34,46 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @Path("entities.administrador")
-public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
+public class AdministradorFacadeREST {
 
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
 
-    public AdministradorFacadeREST() {
+    @EJB
+    private AdministradorInterface ejb;
+    
+    /*public AdministradorFacadeREST() {
         super(Administrador.class);
-    }
+    }*/
 
-    @POST
+    /*@POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Administrador entity) {
         super.create(entity);
+    }*/
+    
+    @POST
+    @Path("CrearCliente/{cliente}")
+    public void createCliente(Cliente entity){
+        try {
+            ejb.crearCliente(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @POST
+    @Path("CrearDietista/{dietista}")
+    public void createDietista(Dietista entity){
+        try {
+            ejb.crearDietista(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    @PUT
+    /*@PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") String id, Administrador entity) {
@@ -59,23 +90,52 @@ public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
     @Path("{id}")
     public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
+    }*/
+    
+    @DELETE
+    @Path("BorrarCliente/{cliente}")
+    public void deleteCliente(Cliente entity){
+        try {
+            ejb.eliminarCliente(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @DELETE
+    @Path("BorrarDietista/{dietista}")
+    public void deleteDietista(Dietista entity){
+        try {
+            ejb.eliminarDietista(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @GET
-    @Path("{id}")
+    @Path("{dni}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Administrador find(@PathParam("id") String id) {
-        return super.find(id);
+    public Administrador find(@PathParam("dni") String dni) {
+        try {
+            return ejb.getAdministradorPorDNI(dni);
+        } catch (ReadException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @GET
-    @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Administrador> findAll() {
-        return super.findAll();
+        try {
+            return (List<Administrador>) ejb.getAdministradorAll();
+        } catch (ReadException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
-    @GET
+    /*@GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Administrador> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
@@ -92,6 +152,6 @@ public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
+    }*/
     
 }
