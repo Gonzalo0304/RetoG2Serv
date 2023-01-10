@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import entities.Alimento;
@@ -39,10 +34,6 @@ public class AlimentoFacadeREST {
     @EJB
     private AlimentoInterface ejb;
 
-    public AlimentoFacadeREST() {
-
-    }
-
     /**
      * Metodo GET RESTful lee todos los objetos de Alimento y lo representa en
      * un XML
@@ -66,7 +57,7 @@ public class AlimentoFacadeREST {
      * Metodo GET RESTful lee un objeto alimento por su Id y lo representa en un
      * XML
      *
-     * @param id es un Objeto a leer
+     * @param id es un String
      * @return Devuelve un objeto alimento con Datos
      */
     @GET
@@ -87,7 +78,7 @@ public class AlimentoFacadeREST {
      * Metodo GET RESTful lee todos los objetos de Alimento por su nombre y lo
      * representa en un XML
      *
-     * @param nombre es un objeto a leer
+     * @param nombre es un String a leer
      * @return Devuelve una lista de tipo alimento que contiene datos
      */
     @GET
@@ -101,7 +92,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimento;
-
     }
 
     /**
@@ -124,7 +114,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -145,7 +134,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -166,7 +154,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -188,7 +175,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -209,7 +195,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -230,7 +215,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -252,7 +236,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -273,7 +256,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -294,7 +276,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -316,7 +297,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -337,7 +317,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -358,7 +337,6 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
@@ -380,50 +358,49 @@ public class AlimentoFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alimentos;
-
     }
 
     /**
-     *
-     * @param alimento
+     * Metodo POST RESTful crea un objeto de Alimento y lo representa en un XML
+     * @param alimento Es un Objeto de la entidad Alimento
      */
-        @POST
-        @Consumes({"application/xml"})
-        public void crearAlimento(Alimento alimento) {
-            try {
-                ejb.crearAlimento(alimento);
-            } catch (CreateException ex) {
-                Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    @POST
+    @Consumes({"application/xml"})
+    public void crearAlimento(Alimento alimento) {
+        try {
+            ejb.crearAlimento(alimento);
+        } catch (CreateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        /**
-         *
-         * @param alimento
-         */
-        @PUT
-        @Consumes({"application/xml"})
-        public void actualizarAlimento(Alimento alimento) {
-            try {
-                ejb.modificarAlimento(alimento);
-            } catch (UpdateException ex) {
-                Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    /**
+     * Metodo PUT RESTful modifica un objeto de Alimento de la base de Datos y
+     * lo representa en un XML
+     * @param alimento Es un objeto de la entidad Alimento
+     */
+    @PUT
+    @Consumes({"application/xml"})
+    public void actualizarAlimento(Alimento alimento) {
+        try {
+            ejb.modificarAlimento(alimento);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        /**
-         *
-         * @param id
-         */
-        @DELETE
-        @Path("{id}")
-        //@Consumes({"application/xml"})
-        public void eliminarAlimento(@PathParam("id") String id) {
-            try {
-                ejb.eliminarAlimento(ejb.getAlimentoPorId(id));
-            } catch (DeleteException | ReadException ex) {
-                Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    /**
+     * Metodo DELETE RESTful elimina un objeto de la entidad Alimento de la base
+     * de Datos y lo representa en un XML
+     * @param id Es un String
+     */
+    @DELETE
+    @Path("{id}")
+    public void eliminarAlimento(@PathParam("id") String id) {
+        try {
+            ejb.eliminarAlimento(ejb.getAlimentoPorId(id));
+        } catch (DeleteException | ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    }
 }

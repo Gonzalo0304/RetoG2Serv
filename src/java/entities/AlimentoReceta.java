@@ -21,9 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "ALIMENTORECETA", schema = "nutrivago")
-
+//query de la tabla AlimentoReceta
 @NamedQueries({
-   //@NamedQuery(name="getAlimentoRecetaPorIdReceta", query= "SELECT ar FROM AlimentoReceta AS ar WHERE ar.idReceta = :idReceta"),
    @NamedQuery(name="getAlimentoRecetaPorCantidad", query= "SELECT ar FROM AlimentoReceta AS ar WHERE ar.cantidad = :cantidad"),
    @NamedQuery(name="getAlimentoRecetaTodos", query= "SELECT ar FROM AlimentoReceta AS ar")
 
@@ -31,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 })
 @XmlRootElement
 public class AlimentoReceta implements Serializable{
+    //Atributos
     @EmbeddedId
     private AlimRecID idAlimentoReceta;
     @MapsId("idRec")
@@ -40,11 +40,11 @@ public class AlimentoReceta implements Serializable{
     @ManyToOne
     private Alimento alimento;
     private Integer cantidad;    
-
+//Constructor
     public AlimentoReceta() {
         super();
     }
-
+//Getters y Setters
     public AlimRecID getIdAlimentoReceta() {
         return idAlimentoReceta;
     }

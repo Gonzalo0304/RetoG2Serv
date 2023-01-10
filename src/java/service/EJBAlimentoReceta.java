@@ -26,6 +26,12 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
 
+    /**
+     * Crea un Objeto AlimentoReceta en la base de Datos
+     *
+     * @param alimentoReceta es un Objeto de la Entidad AlimentoReceta
+     * @throws CreateException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public void crearAlimentoReceta(AlimentoReceta alimentoReceta) throws CreateException {
         try {
@@ -35,6 +41,12 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
         }
     }
 
+    /**
+     * Elimina un Objeto AlimentoRceta de la base de Datos
+     *
+     * @param alimentoReceta es un Objeto de la Entidad Alimento
+     * @throws DeleteException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public void eliminarAlimentoReceta(AlimentoReceta alimentoReceta) throws DeleteException {
         try {
@@ -44,6 +56,12 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
         }
     }
 
+    /**
+     * Modifica un Objeto AlimentoReceta de la base de Datos
+     *
+     * @param alimentoReceta es un Objeto de la Entidad AlimentoReceta
+     * @throws UpdateException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public void modificarAlimentoReceta(AlimentoReceta alimentoReceta) throws UpdateException {
         try {
@@ -55,19 +73,28 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
         }
     }
 
+    /**
+     * Busca un Objeto AlimentoReceta por su idReceta y idAlimento en la base de
+     * Datos
+     *
+     * @param idReceta es un String
+     * @param idAlimento es un String
+     * @return Devuelve un Objeto alimentoReceta con Datos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
-    public AlimentoReceta getAlimentoRecetaPorIdRecetaIdAlimento(String idReceta , String idAlimento) throws ReadException {
-        AlimentoReceta alimentoReceta=null;
+    public AlimentoReceta getAlimentoRecetaPorIdRecetaIdAlimento(String idReceta, String idAlimento) throws ReadException {
+        AlimentoReceta alimentoReceta = null;
         List<AlimentoReceta> listaAlimentoReceta = null;
         try {
 
             listaAlimentoReceta = em.createNamedQuery("getAlimentoRecetaTodos").getResultList();
             for (int i = 0; i < listaAlimentoReceta.size(); i++) {
-                if(listaAlimentoReceta.get(i).getReceta().getIdReceta().equalsIgnoreCase(idReceta)&&listaAlimentoReceta.get(i).getAlimento().getIdAlimento().equalsIgnoreCase(idAlimento)){
-                    alimentoReceta=listaAlimentoReceta.get(i);  
-                   
+                if (listaAlimentoReceta.get(i).getReceta().getIdReceta().equalsIgnoreCase(idReceta) && listaAlimentoReceta.get(i).getAlimento().getIdAlimento().equalsIgnoreCase(idAlimento)) {
+                    alimentoReceta = listaAlimentoReceta.get(i);
+
                 }
-                
+
             }
 
         } catch (Exception e) {
@@ -77,6 +104,13 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
         return alimentoReceta;
     }
 
+    /**
+     * Busca una lista de todos los objetos de AlimentoReceta en la base de
+     * Datos
+     *
+     * @return Devuelve una Lista de AlimentoReceta
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<AlimentoReceta> getAlimentoRecetaTodos() throws ReadException {
         List<AlimentoReceta> listaAlimentoReceta = null;
@@ -88,6 +122,14 @@ public class EJBAlimentoReceta implements AlimentoRecetaInterface {
         return listaAlimentoReceta;
     }
 
+    /**
+     * Busca una lista de todos los objetos de AlimentoReceta que tenga como
+     * atributo una cantidad de alimentoReceta predeterminado
+     *
+     * @param cantidad es un Integer
+     * @return Devuelve una Lista de Alimentos
+     * @throws ReadException Por si surge alguna excepcion durante el proceso
+     */
     @Override
     public Collection<AlimentoReceta> getAlimentoRecetaPorCantidad(Integer cantidad) throws ReadException {
         Collection<AlimentoReceta> listaAlimentoRecetas = null;

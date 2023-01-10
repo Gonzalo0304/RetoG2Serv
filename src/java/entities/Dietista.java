@@ -24,16 +24,18 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Gonzalo
  */
 @Entity
-@Table(name="dietista",schema="nutrivago")
+@Table(name = "dietista", schema = "nutrivago")
 @DiscriminatorValue("Dietista")
-
+//Querys de la tabla Dietista
 @NamedQueries({
-   @NamedQuery(name="getDietistaPorDni", query= "SELECT d FROM Dietista AS d WHERE d.dni = :dni"),
-   @NamedQuery(name="getDietistaTodos", query= "SELECT d FROM Dietista AS d")
+    @NamedQuery(name = "getDietistaPorDni", query = "SELECT d FROM Dietista AS d WHERE d.dni = :dni")
+    ,
+   @NamedQuery(name = "getDietistaTodos", query = "SELECT d FROM Dietista AS d")
 })
 @XmlRootElement
-public class Dietista extends Usuario{
-    
+public class Dietista extends Usuario {
+
+    // atributos
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
 
@@ -46,23 +48,24 @@ public class Dietista extends Usuario{
     /**
      * @associates <{g2.Dieta}>
      */
-    @OneToMany(mappedBy = "dietista")    
-    private Collection<Dieta>listaDietas;
+    @OneToMany(mappedBy = "dietista")
+    private Collection<Dieta> listaDietas;
 
     /**
      * @associates <{g2.Receta}>
      */
-    @OneToMany(mappedBy = "dietista")  
+    @OneToMany(mappedBy = "dietista")
     private Collection<Receta> listaRecetas;
 
     /**
      * @associates <{g2.Alimento}>
      */
-    @OneToMany(mappedBy = "dietista")  
+    @OneToMany(mappedBy = "dietista")
     private Collection<Alimento> listaAlimentos;
-    
+
     @ManyToOne
     private Administrador administrador;
+//Getters and Setters 
 
     public Date getFechaAlta() {
         return fechaAlta;
@@ -116,8 +119,6 @@ public class Dietista extends Usuario{
         this.administrador = administrador;
     }
 
-    
-    
     public Dietista() {
         super();
     }

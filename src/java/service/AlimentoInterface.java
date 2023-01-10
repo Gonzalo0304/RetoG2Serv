@@ -15,6 +15,7 @@ import java.util.Collection;
 
 /**
  * Interfaz para EJBAlimento
+ *
  * @author josue
  */
 public interface AlimentoInterface {
@@ -31,7 +32,7 @@ public interface AlimentoInterface {
     /**
      * Este metodo elimina los alimentos que estan creados en la base de datos
      *
-     * @param alimento Es un Objecto de la entidad alimento que contiene los
+     * @param alimento Es un Objeto de la entidad alimento que contiene los
      * datos para eliminar de la base de Datos
      * @throws excepciones.DeleteException se lanza cuando ocurre un error en la
      * eliminación del objeto Alimento de la base de datos
@@ -44,9 +45,8 @@ public interface AlimentoInterface {
      *
      * @param alimento es un Objeto de la entidad alimento que contiene los
      * datos para actualizarlo de la base de datos
-     *
      * @throws excepciones.UpdateException se lanza cuando ocurre un error en la
-     * actualización del objeto Alimento en la base de datos
+     * actualización del objeto AlimentoReceta en la base de datos
      */
     public void modificarAlimento(Alimento alimento) throws UpdateException;
 
@@ -54,7 +54,7 @@ public interface AlimentoInterface {
      * Este metodo busca el alimento por la id
      *
      * @param idAlimento Es un String
-     * @return Devuelve un Objeto entidad Alimento
+     * @return Devuelve un Objeto de la entidad Alimento
      * @throws excepciones.ReadException se lanza cuando ocurre un error en la
      * busqueda del objeto alimento en la base de datos
      */
@@ -226,5 +226,4 @@ public interface AlimentoInterface {
      * busqueda de los objetos alimento en la base de datos
      */
     public Collection<Alimento> getAlimentoPorCarbohidratosEntre(Float carbohidratosAlimentoMax, Float carbohidratosAlimentoMin) throws ReadException;
-
 }

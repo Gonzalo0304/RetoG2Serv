@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -41,11 +40,11 @@ public class AlimentoRecetaFacadeREST {
 
     private AlimRecID getPrimaryKey(PathSegment pathSegment) {
         /*
-         * pathSemgent represents a URI path segment and any associated matrix parameters.
-         * URI path part is supposed to be in form of 'somePath;idAlim=idAlimValue;idRec=idRecValue'.
-         * Here 'somePath' is a result of getPath() method invocation and
-         * it is ignored in the following code.
-         * Matrix parameters are used as field names to build a primary key instance.
+         * pathSemgent representa un segmento de ruta URI y cualquier parámetro de matriz asociado.
+         * Se supone que la parte de la ruta URI tiene la forma de 'somePath;idAlim=idAlimValue;idRec=idRecValue'.
+         * Aquí 'somePath' es el resultado de la invocación del método getPath() y
+         * se ignora en el siguiente código.
+         * Los parámetros de matriz se utilizan como nombres de campo para crear una instancia de clave principal.
          */
 
         entities.AlimRecID key = new entities.AlimRecID();
@@ -61,6 +60,12 @@ public class AlimentoRecetaFacadeREST {
         return key;
     }
 
+    /**
+     * Metodo GET RESTful lee todos los objetos de AlimentoReceta y lo
+     * representa en un XML
+     *
+     * @return Devuelve una lista de AlimentoReceta que contiene Datos
+     */
     @GET
     @Produces({"application/xml"})
     public Collection<AlimentoReceta> getAlimentoRecetaTodos() {
@@ -74,27 +79,39 @@ public class AlimentoRecetaFacadeREST {
         return listaAlimentoReceta;
     }
 
-    
-     @GET @Path("{idReceta}/{idAlimento}")
-     @Produces({"application/xml"}) public AlimentoReceta
-     getAlimentoRecetaPorIdReceta(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
-     AlimentoReceta alimentoReceta = null;
-    
-     try { 
-         alimentoReceta = ejb.getAlimentoRecetaPorIdRecetaIdAlimento(idReceta, idAlimento); 
-     }
-     catch (ReadException ex) {
-     Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex); 
-     } return alimentoReceta; 
-     }
-     
-   
-    
+    /**
+     * Metodo GET RESTful lee un objeto alimento por idReceta y idAlimento; y lo
+     * representa en un XML
+     *
+     * @param idReceta es un String
+     * @param idAlimento es un String
+     * @return Devuelve un objeto alimentoReceta con Datos
+     */
+    @GET
+    @Path("{idReceta}/{idAlimento}")
+    @Produces({"application/xml"})
+    public AlimentoReceta
+            getAlimentoRecetaPorIdRecetaIdAlimento(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
+        AlimentoReceta alimentoReceta = null;
+
+        try {
+            alimentoReceta = ejb.getAlimentoRecetaPorIdRecetaIdAlimento(idReceta, idAlimento);
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return alimentoReceta;
+    }
+
+    /**
+     * Metodo GET RESTful lee todos los objetos de AlimentoReceta por su
+     * cantidad y lo representa en un XML
+     *
+     * @param cantidad es un Integer
+     * @return Devuelve una lista de tipo alimentoReceta que contiene datos
+     */
     @GET
     @Path("AlimentoReceta/{cantidad}")
     @Produces({"application/xml"})
-    
-    
     public Collection<AlimentoReceta> getAlimentoRecetaPorCantidad(@PathParam("cantidad") Integer cantidad) {
         Collection<AlimentoReceta> listaAlimentoReceta = null;
 
@@ -106,6 +123,12 @@ public class AlimentoRecetaFacadeREST {
         return listaAlimentoReceta;
     }
 
+    /**
+     * Metodo POST RESTful crea un objeto de AlimentoReceta y lo representa en
+     * un XML
+     *
+     * @param alimentoReceta Es un objeto de la entidad AlimentoReceta
+     */
     @POST
     @Consumes({"application/xml"})
     public void crearAlimentoReceta(AlimentoReceta alimentoReceta) {
@@ -116,6 +139,12 @@ public class AlimentoRecetaFacadeREST {
         }
     }
 
+    /**
+     * Metodo PUT RESTful modifica un objeto de AlimentoReceta de la base de
+     * Datos y lo representa en un XML
+     *
+     * @param alimentoReceta Es un objeto de la entidad AlimentoReceta
+     */
     @PUT
     @Consumes({"application/xml"})
     public void actualizarDietista(AlimentoReceta alimentoReceta) {
@@ -126,15 +155,21 @@ public class AlimentoRecetaFacadeREST {
         }
     }
 
-   /** @DELETE
-    @Path("EliminarAlimentoReceta/{idReceta}")
-    @Consumes({"application/xml"})
-    public void eliminarDietista(@PathParam("idReceta") String idReceta) {
+    /**
+     * Metodo DELETE RESTful elimina un objeto de la entidad AlimentoReceta de
+     * la base de Datos y lo representa en un XML
+     *
+     * @param idReceta Es un String
+     * @param idAlimento Es un String
+     */
+    @DELETE
+    @Path("{idReceta}/{idAlimento}")
+    //@Consumes({"application/xml"})
+    public void eliminarDietista(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
         try {
-            ejb.eliminarAlimentoReceta(ejb.getAlimentoRecetaPorIdReceta(idReceta));
+            ejb.eliminarAlimentoReceta(ejb.getAlimentoRecetaPorIdRecetaIdAlimento(idReceta, idAlimento));
         } catch (DeleteException | ReadException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-*/
 }

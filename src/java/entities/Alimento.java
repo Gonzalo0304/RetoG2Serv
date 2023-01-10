@@ -30,7 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "ALIMENTO", schema = "nutrivago")
-
+/**
+ * Consultas Querys de la tabla Alimento
+ */
 @NamedQueries({
     @NamedQuery(name = "getAlimentoPorId", query = "SELECT a FROM Alimento AS a WHERE a.idAlimento = :idAlimento")
     ,
@@ -66,7 +68,7 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 @XmlRootElement
 public class Alimento implements Serializable {
-
+//Atributos
     @Id
     private String idAlimento;
     @Enumerated(EnumType.STRING)
@@ -90,11 +92,11 @@ public class Alimento implements Serializable {
      */
     @OneToMany(mappedBy = "alimento")
     private Collection<AlimentoReceta> listaReceta;
-
+//Constructor
     public Alimento() {
         super();
     }
-
+//Getters y Setters
     public String getIdAlimento() {
         return idAlimento;
     }
