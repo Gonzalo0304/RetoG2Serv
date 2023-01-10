@@ -56,6 +56,8 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
 
     public ClienteDietaFacadeREST() {
         super(ClienteDieta.class);
+        
+        
     }
 
     @POST
