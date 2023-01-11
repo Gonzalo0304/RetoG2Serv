@@ -6,7 +6,15 @@
 package service;
 
 import entities.Administrador;
+import entities.Cliente;
+import entities.Dietista;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,12 +32,14 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Gonzalo
  */
-@Stateless
 @Path("entities.administrador")
 public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
 
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
+    
+    @EJB
+    private AdministradorInterface ejb;
 
     public AdministradorFacadeREST() {
         super(Administrador.class);
@@ -39,28 +49,87 @@ public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Administrador entity) {
-        super.create(entity);
+        try {
+            ejb.crearAdministrador(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @POST
+    @Path("CrearCliente")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void createCliente(Cliente entity){
+        try {
+            ejb.crearCliente(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @POST
+    @Path("CrearDietista")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void crearDietista(Dietista entity){
+        try {
+            ejb.crearDietista(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Administrador entity) {
-        super.edit(entity);
+    public void edit(Administrador entity) {
+        try {
+            ejb.modificarAdministrador(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @PUT
+    @Path("CrearCliente/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit (Administrador administrador){
-        super.edit(administrador);
+    public void editCliente(@PathParam("id") String id, Cliente entity) {
+        try {
+            ejb.modificarCliente(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @PUT
+    @Path("CrearDietista/{id}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void editDieista(@PathParam("id") String id, Dietista entity) {
+        try {
+            ejb.modificarDietista(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    @Path("DeleteCliente")
+    public void remove(Cliente entity) {
+        try {
+            ejb.eliminarCliente(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    @DELETE
+    @Path("DeleteDietista")
+    public void removeDietista( Dietista entity) {
+        try {
+            ejb.eliminarDietista(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
