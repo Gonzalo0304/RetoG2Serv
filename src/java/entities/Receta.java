@@ -72,7 +72,7 @@ public class Receta implements Serializable {
     /**
      * @associates <{g2.AlimentoReceta}>
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "receta" )
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL,mappedBy = "receta" )
     private Collection<AlimentoReceta> listaAlimentoReceta;
 
     /**
@@ -84,7 +84,7 @@ public class Receta implements Serializable {
     /**
      * @associates <{uml.Dietista}>
      */
-        @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     private Dietista dietista;
 

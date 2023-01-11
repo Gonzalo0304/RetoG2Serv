@@ -56,12 +56,10 @@ public class Cliente extends Usuario {
     /**
      * @associates <{uml.ClienteDieta}>
      */
-    @OneToMany(cascade=ALL, mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente")
     private Collection<ClienteDieta> listaDieta;
-    @JsonIgnore
     @ManyToOne
     private Dietista dietista;
-    @JsonIgnore
     @ManyToOne
     private Administrador administrador;
 

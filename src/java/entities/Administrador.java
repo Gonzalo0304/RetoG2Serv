@@ -32,13 +32,13 @@ public class Administrador extends Usuario {
     /**
      * @associates <{g2.Dietista}>
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "administrador")
+    @OneToMany(mappedBy = "administrador")
     private Collection<Dietista> listaDietistas;
 
     /**
      * @associates <{g2.Cliente}>
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "administrador")
+    @OneToMany(mappedBy = "administrador")
     private Collection<Cliente> listaClientes;
 
     @XmlTransient

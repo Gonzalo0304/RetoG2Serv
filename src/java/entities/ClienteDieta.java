@@ -28,11 +28,9 @@ public class ClienteDieta implements Serializable {
     @EmbeddedId 
     private CltDietID idClienteDieta;
     @MapsId("idDiet")
-    @JsonIgnore
     @ManyToOne
     private Dieta dieta;
     @MapsId("idClt")
-    @JsonIgnore
     @ManyToOne
     private Cliente cliente;
     @Temporal(TemporalType.DATE)

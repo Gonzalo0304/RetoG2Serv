@@ -72,7 +72,7 @@ public class Dieta implements Serializable{
     /**
      * @associates <{uml.ClienteDieta}>
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade=ALL,mappedBy = "dieta")
+    @OneToMany(mappedBy = "dieta")
     private Collection <ClienteDieta> listaCliente;
 
     public Dieta() {

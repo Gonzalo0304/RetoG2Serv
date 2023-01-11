@@ -51,7 +51,7 @@ public class RecetaFacadeREST  {
 
   @GET
     @Path("{id}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Receta getRecetaPorId(@PathParam("id") String id) {
         Receta receta = null;
 
@@ -65,7 +65,7 @@ public class RecetaFacadeREST  {
     
       @GET
      // @Path("nombreDietistae")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaTodos() {
 
         Collection<Receta> receta = null;
@@ -80,7 +80,7 @@ public class RecetaFacadeREST  {
      
         @GET
         @Path("nombreDietista/ordenadoAlfabeticamente")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetasAlfabeticamente() {
 
         Collection<Receta> receta = null;
@@ -96,7 +96,7 @@ public class RecetaFacadeREST  {
         
         @GET
         @Path("nombreDietista/ordenadoFecha")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaFechaCreacion() {
 
         Collection<Receta> receta = null;
@@ -116,7 +116,7 @@ public class RecetaFacadeREST  {
     
              @GET
           @Path("nombreDietista/{nombre}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaNombreDietista(@PathParam("nombre") String nombre) {
 
         Collection<Receta> receta = null;
@@ -130,7 +130,7 @@ public class RecetaFacadeREST  {
     
                @GET
           @Path("nombreReceta/{nombreReceta}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getNombreReceta(@PathParam("nombreReceta") String nombreReceta) {
 
         Collection<Receta> receta = null;
@@ -144,7 +144,7 @@ public class RecetaFacadeREST  {
     
                @GET
           @Path("tipoReceta/{tipoReceta}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaTipo(@PathParam("tipoReceta") String tipoReceta) {
 
         Collection<Receta> receta = null;
@@ -157,7 +157,7 @@ public class RecetaFacadeREST  {
     }
     
    @POST
-   @Consumes({"application/xml"})
+   @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
    public void crearReceta(Receta receta){
        try{
            ejb.crearReceta(receta);
@@ -167,7 +167,7 @@ public class RecetaFacadeREST  {
    }
     
     @PUT
-     @Consumes({"application/xml"})
+     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
      public void modificarReceta(Receta receta){
        try{
            ejb.modificarReceta(receta);
