@@ -5,13 +5,16 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -69,18 +72,19 @@ public class Receta implements Serializable {
     /**
      * @associates <{g2.AlimentoReceta}>
      */
-    @OneToMany(mappedBy = "receta")
-    private Collection<AlimentoReceta> listaAlimento;
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "receta" )
+    private Collection<AlimentoReceta> listaAlimentoReceta;
 
     /**
      * @associates <{g2.Dieta}>
      */
-    @ManyToMany(mappedBy = "listaReceta")
+    @ManyToMany(mappedBy = "listaReceta", fetch= FetchType.EAGER)
     private Collection<Dieta> listaDieta;
 
     /**
      * @associates <{uml.Dietista}>
      */
+        @JsonIgnore
     @ManyToOne
     private Dietista dietista;
 
@@ -121,12 +125,12 @@ public class Receta implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AlimentoReceta> getListaAlimento() {
-        return listaAlimento;
+    public Collection<AlimentoReceta> getListaAlimentoReceta() {
+        return listaAlimentoReceta;
     }
 
-    public void setListaAlimento(Collection<AlimentoReceta> listaAlimento) {
-        this.listaAlimento = listaAlimento;
+    public void setListaAlimento(Collection<AlimentoReceta> listaAlimentoReceta) {
+        this.listaAlimentoReceta = listaAlimentoReceta;
     }
 
     public TipoDieta getTIPO() {

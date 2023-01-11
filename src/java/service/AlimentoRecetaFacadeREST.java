@@ -23,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.PathSegment;
 
 /**
@@ -67,7 +68,8 @@ public class AlimentoRecetaFacadeREST {
      * @return Devuelve una lista de AlimentoReceta que contiene Datos
      */
     @GET
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    
     public Collection<AlimentoReceta> getAlimentoRecetaTodos() {
 
         Collection<AlimentoReceta> listaAlimentoReceta = null;
@@ -89,7 +91,7 @@ public class AlimentoRecetaFacadeREST {
      */
     @GET
     @Path("{idReceta}/{idAlimento}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public AlimentoReceta
             getAlimentoRecetaPorIdRecetaIdAlimento(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
         AlimentoReceta alimentoReceta = null;
@@ -111,7 +113,7 @@ public class AlimentoRecetaFacadeREST {
      */
     @GET
     @Path("AlimentoReceta/{cantidad}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<AlimentoReceta> getAlimentoRecetaPorCantidad(@PathParam("cantidad") Integer cantidad) {
         Collection<AlimentoReceta> listaAlimentoReceta = null;
 
@@ -130,7 +132,7 @@ public class AlimentoRecetaFacadeREST {
      * @param alimentoReceta Es un objeto de la entidad AlimentoReceta
      */
     @POST
-    @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearAlimentoReceta(AlimentoReceta alimentoReceta) {
         try {
             ejb.crearAlimentoReceta(alimentoReceta);
@@ -146,7 +148,7 @@ public class AlimentoRecetaFacadeREST {
      * @param alimentoReceta Es un objeto de la entidad AlimentoReceta
      */
     @PUT
-    @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void actualizarDietista(AlimentoReceta alimentoReceta) {
         try {
             ejb.modificarAlimentoReceta(alimentoReceta);

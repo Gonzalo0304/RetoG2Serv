@@ -5,6 +5,7 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -34,9 +35,11 @@ public class AlimentoReceta implements Serializable{
     @EmbeddedId
     private AlimRecID idAlimentoReceta;
     @MapsId("idRec")
+        @JsonIgnore
     @ManyToOne
     private Receta receta;
     @MapsId("idAlim")
+        @JsonIgnore
     @ManyToOne
     private Alimento alimento;
     private Integer cantidad;    

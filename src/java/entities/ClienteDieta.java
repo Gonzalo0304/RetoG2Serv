@@ -5,6 +5,7 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
@@ -27,9 +28,11 @@ public class ClienteDieta implements Serializable {
     @EmbeddedId 
     private CltDietID idClienteDieta;
     @MapsId("idDiet")
+    @JsonIgnore
     @ManyToOne
     private Dieta dieta;
     @MapsId("idClt")
+    @JsonIgnore
     @ManyToOne
     private Cliente cliente;
     @Temporal(TemporalType.DATE)

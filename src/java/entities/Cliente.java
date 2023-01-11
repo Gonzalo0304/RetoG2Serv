@@ -5,9 +5,11 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -54,10 +56,12 @@ public class Cliente extends Usuario {
     /**
      * @associates <{uml.ClienteDieta}>
      */
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(cascade=ALL, mappedBy = "cliente")
     private Collection<ClienteDieta> listaDieta;
+    @JsonIgnore
     @ManyToOne
     private Dietista dietista;
+    @JsonIgnore
     @ManyToOne
     private Administrador administrador;
 

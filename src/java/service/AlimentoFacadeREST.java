@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  * RESTful Servicio Web para enseñar las opreaciones CRUD de la Clase Alimento
@@ -41,7 +42,7 @@ public class AlimentoFacadeREST {
      * @return Devuelve una lista de Alimentos que contiene Datos
      */
     @GET
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoTodos() {
 
         Collection<Alimento> alimentos = null;
@@ -62,7 +63,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("{id}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Alimento getAlimentoPorId(@PathParam("id") String id) {
         Alimento alimento = null;
 
@@ -83,7 +84,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoNombre/{nombre}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorNombre(@PathParam("nombre") String nombre) {
         Collection<Alimento> alimento = null;
         try {
@@ -103,7 +104,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoTIPO/{tipo}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorTipo(@PathParam("tipo") String tipo) {
         Collection<Alimento> alimentos = null;
         TipoAlimento tipoAlimento = null;
@@ -125,7 +126,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoCaloriasSuperior/{calorias}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorCaloriasSuperior(@PathParam("calorias") Float calorias) {
         Collection<Alimento> alimentos = null;
         try {
@@ -145,7 +146,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoCaloriasMinimo/{calorias}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorCaloriasMinimo(@PathParam("calorias") Float calorias) {
         Collection<Alimento> alimentos = null;
         try {
@@ -166,7 +167,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoCaloriasEntre/{caloriasMax}/{caloriasMin}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorCaloriasEntre(@PathParam("caloriasMax") Float caloriasMax, @PathParam("caloriasMin") Float caloriasMin) {
         Collection<Alimento> alimentos = null;
         try {
@@ -186,7 +187,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoGrasasSuperior/{grasas}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorGrasasSuperior(@PathParam("grasas") Float grasas) {
         Collection<Alimento> alimentos = null;
         try {
@@ -206,7 +207,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoGrasasMinimo/{grasas}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorGrasasMinimo(@PathParam("grasas") Float grasas) {
         Collection<Alimento> alimentos = null;
         try {
@@ -227,7 +228,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoGrasasEntre/{grasasMax}/{grasasMin}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorGrasasEntre(@PathParam("grasasMax") Float grasasMax, @PathParam("grasasMin") Float grasasMin) {
         Collection<Alimento> alimentos = null;
         try {
@@ -247,7 +248,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoProteinasSuperior/{proteinas}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorProteinasSuperior(@PathParam("proteinas") Float proteinas) {
         Collection<Alimento> alimentos = null;
         try {
@@ -267,7 +268,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoProteinasMinimo/{proteinas}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorProteinasMinimo(@PathParam("proteinas") Float proteinas) {
         Collection<Alimento> alimentos = null;
         try {
@@ -288,7 +289,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoProteinasEntre/{proteinasMax}/{proteinasMin}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorProteinasEntre(@PathParam("proteinasMax") Float proteinasMax, @PathParam("proteinasMin") Float proteinasMin) {
         Collection<Alimento> alimentos = null;
         try {
@@ -308,7 +309,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoCarbohidratosSuperior/{carbohidratos}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorCarbohidratosSuperior(@PathParam("carbohidratos") Float carbohidratos) {
         Collection<Alimento> alimentos = null;
         try {
@@ -328,7 +329,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoCarbohidratosMinimo/{carbohidratos}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorCarbohidratosMinimo(@PathParam("carbohidratos") Float carbohidratos) {
         Collection<Alimento> alimentos = null;
         try {
@@ -349,7 +350,7 @@ public class AlimentoFacadeREST {
      */
     @GET
     @Path("AlimentoCarbohidratosEntre/{carbohidratosMax}/{carbohidratosMin}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Alimento> getAlimentoPorCarbohidratosEntre(@PathParam("carbohidratosMax") Float carbohidratosMax, @PathParam("carbohidratosMin") Float carbohidratosMin) {
         Collection<Alimento> alimentos = null;
         try {
@@ -365,7 +366,7 @@ public class AlimentoFacadeREST {
      * @param alimento Es un Objeto de la entidad Alimento
      */
     @POST
-    @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearAlimento(Alimento alimento) {
         try {
             ejb.crearAlimento(alimento);
@@ -380,7 +381,7 @@ public class AlimentoFacadeREST {
      * @param alimento Es un objeto de la entidad Alimento
      */
     @PUT
-    @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void actualizarAlimento(Alimento alimento) {
         try {
             ejb.modificarAlimento(alimento);

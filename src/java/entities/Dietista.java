@@ -5,10 +5,15 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Collection;
 import java.util.Date;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,33 +41,35 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Dietista extends Usuario {
 
     // atributos
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(as=Date.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date fechaAlta;
 
     /**
      * @associates <{g2.Cliente}>
      */
-    @OneToMany(mappedBy = "dietista")
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "dietista")
     private Collection<Cliente> listaClientes;
 
     /**
      * @associates <{g2.Dieta}>
      */
-    @OneToMany(mappedBy = "dietista")
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "dietista")
     private Collection<Dieta> listaDietas;
 
     /**
      * @associates <{g2.Receta}>
      */
-    @OneToMany(mappedBy = "dietista")
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "dietista")
     private Collection<Receta> listaRecetas;
 
     /**
      * @associates <{g2.Alimento}>
      */
-    @OneToMany(mappedBy = "dietista")
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "dietista")
     private Collection<Alimento> listaAlimentos;
-
+    @JsonIgnore
     @ManyToOne
     private Administrador administrador;
 //Getters and Setters 

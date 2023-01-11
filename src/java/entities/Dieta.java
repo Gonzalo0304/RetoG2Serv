@@ -5,12 +5,15 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -52,13 +55,15 @@ public class Dieta implements Serializable{
     /**
      * @associates <{uml.Dietista}>
      */
+        @JsonIgnore
+
     @ManyToOne
     private Dietista dietista;
     
     /**
      * @associates <{uml.Receta}>
      */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "dietareceta", schema = "nutrivago")
     private Collection<Receta> listaReceta;
     @Enumerated(EnumType.STRING)
@@ -67,7 +72,7 @@ public class Dieta implements Serializable{
     /**
      * @associates <{uml.ClienteDieta}>
      */
-    @OneToMany(mappedBy = "dieta")
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL,mappedBy = "dieta")
     private Collection <ClienteDieta> listaCliente;
 
     public Dieta() {

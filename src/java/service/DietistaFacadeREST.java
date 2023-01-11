@@ -47,7 +47,7 @@ public class DietistaFacadeREST{
      * @return
      */
     @GET
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Dietista> getDietistaTodos() {
 
         Collection<Dietista> dietistas = null;
@@ -66,7 +66,7 @@ public class DietistaFacadeREST{
      */
     @GET
     @Path("{dni}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Dietista getDietistaPorDni(@PathParam("dni") String dni) {
         Dietista dietista = null;
 
@@ -83,7 +83,7 @@ public class DietistaFacadeREST{
      * @param dietista
      */
     @POST
-    @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearDietista(Dietista dietista) {
         try {
             ejb.crearDietista(dietista);
@@ -97,7 +97,7 @@ public class DietistaFacadeREST{
      * @param dietista
      */
     @PUT
-    @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void actualizarDietista(Dietista dietista) {
         try {
             ejb.modificarDietista(dietista);

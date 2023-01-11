@@ -5,13 +5,19 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -78,20 +84,23 @@ public class Alimento implements Serializable {
     private Float grasasTotales;
     private Float proteinas;
     private Float carbohidratos;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(as=Date.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date fechaInsert;
 
     /**
      * @associates <{uml.Dietista}>
      */
+    @JsonIgnore
     @ManyToOne
     private Dietista dietista;
 
     /**
      * @associates <{g2.AlimentoReceta}>
      */
-    @OneToMany(mappedBy = "alimento")
-    private Collection<AlimentoReceta> listaReceta;
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL, mappedBy = "alimento")
+    private Collection<AlimentoReceta> listaAlimentoReceta;
 //Constructor
     public Alimento() {
         super();
@@ -170,12 +179,12 @@ public class Alimento implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AlimentoReceta> getListaReceta() {
-        return listaReceta;
+    public Collection<AlimentoReceta> getListaAlimentoReceta() {
+        return listaAlimentoReceta;
     }
 
-    public void setListaReceta(Collection<AlimentoReceta> listaReceta) {
-        this.listaReceta = listaReceta;
+    public void setListaReceta(Collection<AlimentoReceta> listaAlimentoReceta) {
+        this.listaAlimentoReceta = listaAlimentoReceta;
     }
 
     @Override
