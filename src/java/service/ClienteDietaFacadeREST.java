@@ -7,7 +7,14 @@ package service;
 
 import entities.ClienteDieta;
 import entities.CltDietID;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,12 +33,14 @@ import javax.ws.rs.core.PathSegment;
  *
  * @author josue
  */
-@Stateless
 @Path("entities.clientedieta")
 public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
 
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
+    
+    @EJB
+    private ClienteDietaInterface ejb;
 
     private CltDietID getPrimaryKey(PathSegment pathSegment) {
         /*
@@ -64,25 +73,36 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(ClienteDieta entity) {
-        super.create(entity);
+        try {
+            ejb.crearClienteDieta(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") PathSegment id, ClienteDieta entity) {
-        super.edit(entity);
+        try {
+            ejb.modificarClienteDieta(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
-        entities.CltDietID key = getPrimaryKey(id);
-        super.remove(super.find(key));
+    @Override
+    public void remove(ClienteDieta entity) {
+        try {
+            ejb.eliminarClienteDieta(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
+    
     @GET
-    @Path("{id}")
+    @Path("GetId/{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public ClienteDieta find(@PathParam("id") PathSegment id) {
         entities.CltDietID key = getPrimaryKey(id);
@@ -93,7 +113,27 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<ClienteDieta> findAll() {
-        return super.findAll();
+        List<ClienteDieta> listaClienteDieta = null;
+        try {
+            listaClienteDieta = (List<ClienteDieta>) ejb.getClienteDietaTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaClienteDieta;
+                
+    }
+    
+    @GET
+    @Path("GetClienIdDietaId/{idCliente}/{idDieta}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public ClienteDieta getClieIdDietaId(@PathParam("idCliente")String idCliente, @PathParam("idDieta")String idDieta){
+        ClienteDieta clienteDieta = null;
+        try {
+            clienteDieta = ejb.getClienteDietaPorIdClienteIdDieta(idCliente, idDieta);
+        } catch (ReadException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clienteDieta;
     }
 
     @GET

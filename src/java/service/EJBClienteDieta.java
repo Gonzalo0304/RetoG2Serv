@@ -12,6 +12,7 @@ import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.Collection;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -19,6 +20,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author somor
  */
+@Stateless
 public class EJBClienteDieta implements ClienteDietaInterface{
     
      @PersistenceContext(unitName = "Reto2G2ServPU")
