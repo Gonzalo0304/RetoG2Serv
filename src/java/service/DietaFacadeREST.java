@@ -38,8 +38,6 @@ import javax.ws.rs.core.MediaType;
 @Path("entities.dieta")
 public class DietaFacadeREST{
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
 
     @EJB
     private DietaInterface ejb;
@@ -89,7 +87,7 @@ public class DietaFacadeREST{
 
     @GET
     @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Dieta find(@PathParam("id") String id) {
         try {
             return ejb.getDietaoPorId(id);
@@ -102,7 +100,7 @@ public class DietaFacadeREST{
     
     @GET
     @Path("FindNombre/{nombre}")
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Dieta findNombre(@PathParam("nombre") String nombre) {
         try {
             return ejb.getDietaoPorNombre(nombre);
@@ -115,7 +113,7 @@ public class DietaFacadeREST{
     
     @GET
     @Path("FindTipo/{tipo}")
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Dieta findTipo(@PathParam("tipo") TipoDieta tipo) {
         try {
             return (Dieta) ejb.getDietaPorTipo(tipo);
@@ -128,7 +126,7 @@ public class DietaFacadeREST{
     
     @GET
     @Path("FindObjetivo/{objetivo}")
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Dieta findObjetivo(@PathParam("objetivo") Objetivo objetivo) {
         try {
             return (Dieta) ejb.getDietaPorObjetivo(objetivo);
@@ -140,7 +138,7 @@ public class DietaFacadeREST{
     }
 
     @GET
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Dieta> findAll() {
         try {
             return (List<Dieta>) ejb.getDietaAll();

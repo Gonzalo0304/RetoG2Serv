@@ -16,6 +16,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -56,10 +57,12 @@ public class Cliente extends Usuario {
     /**
      * @associates <{uml.ClienteDieta}>
      */
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(fetch = FetchType.EAGER, cascade=ALL,mappedBy = "cliente")
     private Collection<ClienteDieta> listaDieta;
+    @JsonIgnore
     @ManyToOne
     private Dietista dietista;
+        @JsonIgnore
     @ManyToOne
     private Administrador administrador;
 
