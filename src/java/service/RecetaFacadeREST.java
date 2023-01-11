@@ -33,11 +33,11 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author josue
+ * @author jon
  */
 
 @Path("entities.receta")
-public class RecetaFacadeREST  {
+public class RecetaFacadeREST {
     
      @EJB
     private RecetaInterface ejb;
@@ -51,7 +51,7 @@ public class RecetaFacadeREST  {
 
   @GET
     @Path("{id}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Receta getRecetaPorId(@PathParam("id") String id) {
         Receta receta = null;
 
@@ -65,14 +65,15 @@ public class RecetaFacadeREST  {
     
       @GET
      // @Path("nombreDietistae")
-    @Produces({"application/xml"})
+  // @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+      @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON}) 
     public Collection<Receta> getRecetaTodos() {
 
         Collection<Receta> receta = null;
         try {
             receta = ejb.getRecetaTodos();
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return receta;
     }
@@ -80,14 +81,14 @@ public class RecetaFacadeREST  {
      
         @GET
         @Path("nombreDietista/ordenadoAlfabeticamente")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetasAlfabeticamente() {
 
         Collection<Receta> receta = null;
         try {
             receta = ejb.getRecetasAlfabeticamente();
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return receta;
     }
@@ -96,14 +97,14 @@ public class RecetaFacadeREST  {
         
         @GET
         @Path("nombreDietista/ordenadoFecha")
-    @Produces({"application/xml"})
+   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaFechaCreacion() {
 
         Collection<Receta> receta = null;
         try {
             receta = ejb.getRecetaFechaCreacion();
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return receta;
     }
@@ -116,48 +117,48 @@ public class RecetaFacadeREST  {
     
              @GET
           @Path("nombreDietista/{nombre}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaNombreDietista(@PathParam("nombre") String nombre) {
 
         Collection<Receta> receta = null;
         try {
             receta = ejb.getRecetaNombreDietista(nombre);
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return receta;
     }
     
                @GET
           @Path("nombreReceta/{nombreReceta}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getNombreReceta(@PathParam("nombreReceta") String nombreReceta) {
 
         Collection<Receta> receta = null;
         try {
             receta = ejb.getNombreReceta(nombreReceta);
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return receta;
     }
     
                @GET
           @Path("tipoReceta/{tipoReceta}")
-    @Produces({"application/xml"})
+     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Receta> getRecetaTipo(@PathParam("tipoReceta") String tipoReceta) {
 
         Collection<Receta> receta = null;
         try {
             receta = ejb.getRecetaTipo(tipoReceta);
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return receta;
     }
     
    @POST
-   @Consumes({"application/xml"})
+   @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
    public void crearReceta(Receta receta){
        try{
            ejb.crearReceta(receta);
@@ -167,7 +168,7 @@ public class RecetaFacadeREST  {
    }
     
     @PUT
-     @Consumes({"application/xml"})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
      public void modificarReceta(Receta receta){
        try{
            ejb.modificarReceta(receta);
@@ -177,7 +178,7 @@ public class RecetaFacadeREST  {
      }
          @DELETE
         // @Consumes({"application/xml"})
-    @Path("{id}")
+   @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void removeAccount(@PathParam("id") String id) {
         try {
           

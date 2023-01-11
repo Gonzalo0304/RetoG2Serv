@@ -20,11 +20,13 @@ import javax.persistence.PersistenceContext;
  * @author jon
  */
 @Stateless
-public class EJBReceta implements RecetaInterface {
+public class EJBReceta implements RecetaInterface{
     
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
 
+    
+    
     
     
      @Override

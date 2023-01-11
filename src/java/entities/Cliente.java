@@ -42,7 +42,9 @@ import javax.xml.bind.annotation.XmlTransient;
    
 //@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 @XmlRootElement
-public class Cliente extends Usuario {
+public class Cliente extends Usuario{
+    
+    
     
     private Float altura;
     private String genero;

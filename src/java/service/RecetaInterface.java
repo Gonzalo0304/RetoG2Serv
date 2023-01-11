@@ -20,7 +20,7 @@ import java.util.Collection;
  *
  * @author jon
  */
-public interface RecetaInterface {
+public interface RecetaInterface{
 
     /**
      * Este metodo busca la receta por la id
@@ -32,7 +32,9 @@ public interface RecetaInterface {
      */
     
     
-    public void crearReceta(Receta receta) throws CreateException;
+    
+    
+    public void crearReceta(Receta receta) throws CreateException ;
     
     public void modificarReceta(Receta receta) throws UpdateException;
     

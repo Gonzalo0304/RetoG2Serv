@@ -19,7 +19,9 @@ import java.util.Collection;
  *
  * @author somor
  */
-public interface ClienteInterface {
+public interface ClienteInterface{
+    
+    
     
     public Collection<Cliente> getClienteTodos()throws ReadException;
     

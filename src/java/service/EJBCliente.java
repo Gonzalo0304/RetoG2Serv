@@ -24,7 +24,9 @@ import javax.persistence.PersistenceContext;
  * @author somor
  */
 @Stateless
-public class EJBCliente implements ClienteInterface{
+public class EJBCliente implements ClienteInterface {
+    
+    
     
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;

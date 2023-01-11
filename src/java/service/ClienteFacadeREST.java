@@ -39,7 +39,7 @@ import javax.ws.rs.core.MediaType;
  */
 
 @Path("entities.cliente")
-public class ClienteFacadeREST  {
+public class ClienteFacadeREST {
     
     
      @EJB
@@ -53,51 +53,51 @@ public class ClienteFacadeREST  {
     
         @GET
      // @Path("nombreDietistae")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Cliente> getDietistasTodos() {
 
         Collection <Cliente> clientes = null;
         try {
             clientes = ejb.getClienteTodos();
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clientes;
     }
     
    @GET
     @Path("{id}")
-    @Produces({"application/xml"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cliente getClientePorId(@PathParam("id") String id) {
         Cliente cliente = null;
 
         try {
             cliente = ejb.getClientePorId(id);
         } catch (ReadException ex) {
-            Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClienteFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return cliente;
     }
     
     
     @POST
-   @Consumes({"application/xml"})
+   @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
    public void crearCliente(Cliente cliente){
        try{
            ejb.crearCliente(cliente);
        } catch (CreateException ex) {
-             Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(ClienteFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
          }
    }
     
    
      @PUT
-     @Consumes({"application/xml"})
+     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
      public void modificarCliente(Cliente cliente){
        try{
            ejb.modificarCliente(cliente);
        } catch (UpdateException ex) {
-             Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+             Logger.getLogger(ClienteFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
          }
      }
      
