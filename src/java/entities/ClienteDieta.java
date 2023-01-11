@@ -5,13 +5,17 @@
  */
 package entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,19 +27,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "CLIENTEDIETA", schema = "nutrivago")
+@NamedQueries({
+    @NamedQuery(name="getClienteDietaTodos", query="SELECT cd FROM ClienteDieta AS cd")
+})
 @XmlRootElement
 public class ClienteDieta implements Serializable {
     @EmbeddedId 
     private CltDietID idClienteDieta;
     @MapsId("idDiet")
+        @JsonIgnore
     @ManyToOne
     private Dieta dieta;
     @MapsId("idClt")
+    @JsonIgnore
     @ManyToOne
     private Cliente cliente;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(as=Date.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date fechaInicio;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonSerialize(as=Date.class)
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date fechaFinal;
     
     

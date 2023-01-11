@@ -7,10 +7,15 @@ package service;
 
 import entities.ClienteDieta;
 import entities.CltDietID;
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,12 +31,11 @@ import javax.ws.rs.core.PathSegment;
  *
  * @author josue
  */
-@Stateless
 @Path("entities.clientedieta")
-public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
-
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
+public class ClienteDietaFacadeREST{
+    
+    @EJB
+    private ClienteDietaInterface ejb;
 
     private CltDietID getPrimaryKey(PathSegment pathSegment) {
         /*
@@ -54,63 +58,65 @@ public class ClienteDietaFacadeREST extends AbstractFacade<ClienteDieta> {
         return key;
     }
 
-    public ClienteDietaFacadeREST() {
-        super(ClienteDieta.class);
-    }
+
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(ClienteDieta entity) {
-        super.create(entity);
+        try {
+            ejb.crearClienteDieta(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    @PUT
-    @Path("{id}")
+    
+        @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") PathSegment id, ClienteDieta entity) {
-        super.edit(entity);
+    public void actualizarClienteDieta(ClienteDieta clienteDieta) {
+        try {
+            ejb.modificarClienteDieta(clienteDieta);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+     @DELETE
+    @Path("GetClienIdDietaId/{idCliente}/{idDieta}")
+    //@Consumes({"application/xml"})
+    public void eliminarClienteDieta(@PathParam("idCliente") String idCliente, @PathParam("idDieta") String idDieta) {
+        try {
+            ejb.eliminarClienteDieta(ejb.getClienteDietaPorIdClienteIdDieta(idCliente, idDieta));
+        } catch (DeleteException | ReadException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") PathSegment id) {
-        entities.CltDietID key = getPrimaryKey(id);
-        super.remove(super.find(key));
-    }
 
     @GET
-    @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ClienteDieta find(@PathParam("id") PathSegment id) {
-        entities.CltDietID key = getPrimaryKey(id);
-        return super.find(key);
-    }
+    public Collection<ClienteDieta> getClienteDietaTodos() {
 
+        Collection<ClienteDieta> listaClienteDieta = null;
+        try {
+            listaClienteDieta = ejb.getClienteDietaTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaClienteDieta;
+    }
+    
     @GET
-    @Override
+    @Path("GetClienIdDietaId/{idCliente}/{idDieta}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ClienteDieta> findAll() {
-        return super.findAll();
+    public ClienteDieta getClieIdDietaId(@PathParam("idCliente")String idCliente, @PathParam("idDieta")String idDieta){
+        ClienteDieta clienteDieta = null;
+        try {
+            clienteDieta = ejb.getClienteDietaPorIdClienteIdDieta(idCliente, idDieta);
+        } catch (ReadException ex) {
+            Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clienteDieta;
     }
 
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<ClienteDieta> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
     
 }

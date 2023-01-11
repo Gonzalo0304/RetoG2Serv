@@ -92,8 +92,7 @@ public class AlimentoRecetaFacadeREST {
     @GET
     @Path("{idReceta}/{idAlimento}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public AlimentoReceta
-            getAlimentoRecetaPorIdRecetaIdAlimento(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
+    public AlimentoReceta getAlimentoRecetaPorIdRecetaIdAlimento(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
         AlimentoReceta alimentoReceta = null;
 
         try {
@@ -149,7 +148,7 @@ public class AlimentoRecetaFacadeREST {
      */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void actualizarDietista(AlimentoReceta alimentoReceta) {
+    public void actualizarAlimentoReceta(AlimentoReceta alimentoReceta) {
         try {
             ejb.modificarAlimentoReceta(alimentoReceta);
         } catch (UpdateException ex) {
@@ -167,7 +166,7 @@ public class AlimentoRecetaFacadeREST {
     @DELETE
     @Path("{idReceta}/{idAlimento}")
     //@Consumes({"application/xml"})
-    public void eliminarDietista(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
+    public void eliminarAlimentoReceta(@PathParam("idReceta") String idReceta, @PathParam("idAlimento") String idAlimento) {
         try {
             ejb.eliminarAlimentoReceta(ejb.getAlimentoRecetaPorIdRecetaIdAlimento(idReceta, idAlimento));
         } catch (DeleteException | ReadException ex) {

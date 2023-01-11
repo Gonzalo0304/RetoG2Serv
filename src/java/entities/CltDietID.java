@@ -15,15 +15,15 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CltDietID implements Serializable{
     
-    private String idClte;
+    private String idClt;
     private String idDiet;
 
     public String getIdClte() {
-        return idClte;
+        return idClt;
     }
 
     public void setIdClte(String idClte) {
-        this.idClte = idClte;
+        this.idClt = idClte;
     }
 
     public String getIdDiet() {
