@@ -53,7 +53,7 @@ public class ClienteFacadeREST  {
     
         @GET
      // @Path("nombreDietistae")
-    @Produces({"application/xml"})
+   @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Cliente> getDietistasTodos() {
 
         Collection <Cliente> clientes = null;
@@ -67,7 +67,7 @@ public class ClienteFacadeREST  {
     
    @GET
     @Path("{id}")
-    @Produces({"application/xml"})
+  @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Cliente getClientePorId(@PathParam("id") String id) {
         Cliente cliente = null;
 
@@ -81,7 +81,7 @@ public class ClienteFacadeREST  {
     
     
     @POST
-   @Consumes({"application/xml"})
+  @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
    public void crearCliente(Cliente cliente){
        try{
            ejb.crearCliente(cliente);
@@ -92,7 +92,7 @@ public class ClienteFacadeREST  {
     
    
      @PUT
-     @Consumes({"application/xml"})
+  @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
      public void modificarCliente(Cliente cliente){
        try{
            ejb.modificarCliente(cliente);
