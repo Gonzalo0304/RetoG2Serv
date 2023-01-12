@@ -6,10 +6,16 @@
 package service;
 
 import entities.Administrador;
-import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import entities.Cliente;
+import entities.Dietista;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,74 +30,110 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Gonzalo
  */
-@Stateless
 @Path("entities.administrador")
-public class AdministradorFacadeREST extends AbstractFacade<Administrador> {
+public class AdministradorFacadeREST{
+   
+    @EJB
+    private AdministradorInterface ejb;
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
-
-    public AdministradorFacadeREST() {
-        super(Administrador.class);
-    }
 
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Administrador entity) {
-        super.create(entity);
+        try {
+            ejb.crearAdministrador(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @POST
+    @Path("CrearCliente")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void createCliente(Cliente entity){
+        try {
+            ejb.crearCliente(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @POST
+    @Path("CrearDietista")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void crearDietista(Dietista entity){
+        try {
+            ejb.crearDietista(entity);
+        } catch (CreateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Administrador entity) {
-        super.edit(entity);
+    public void edit(Administrador entity) {
+        try {
+            ejb.modificarAdministrador(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @PUT
+    @Path("CrearCliente/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit (Administrador administrador){
-        super.edit(administrador);
+    public void editCliente(@PathParam("id") String id, Cliente entity) {
+        try {
+            ejb.modificarCliente(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    @PUT
+    @Path("CrearDietista/{id}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void editDieista(@PathParam("id") String id, Dietista entity) {
+        try {
+            ejb.modificarDietista(entity);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
+    @Path("DeleteCliente")
+    public void remove(Cliente entity) {
+        try {
+            ejb.eliminarCliente(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Administrador find(@PathParam("id") String id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Administrador> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Administrador> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    @DELETE
+    @Path("DeleteDietista")
+    public void removeDietista( Dietista entity) {
+        try {
+            ejb.eliminarDietista(entity);
+        } catch (DeleteException ex) {
+            Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+        @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Collection<Administrador> getAdministradorTodos() {
+
+        Collection<Administrador> administradores = null;
+        try {
+            administradores = ejb.getAdministradorTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return administradores;
+    }
+
+
+
 }

@@ -12,6 +12,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import static javax.persistence.FetchType.EAGER;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -24,6 +26,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name="administrador",schema="nutrivago")
 @DiscriminatorValue("Administrador")
+
+@NamedQueries({
+//    @NamedQuery(name = "getAdministradorPorDni", query = "SELECT a FROM Administrador AS a WHERE a.dni = :dni")
+  //  ,
+   @NamedQuery(name = "getAdministradorTodos", query = "SELECT a FROM Administrador AS a")
+})
 @XmlRootElement
 public class Administrador extends Usuario {
         public Administrador() {
