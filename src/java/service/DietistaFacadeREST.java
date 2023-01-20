@@ -5,6 +5,8 @@
  */
 package service;
 
+import cifrado.Cifrado;
+import cifrado.Hash;
 import entities.Alimento;
 import entities.Dietista;
 import excepciones.CreateException;
@@ -34,9 +36,9 @@ import javax.ws.rs.core.MediaType;
  * @author josue
  */
 @Path("entities.dietista")
-public class DietistaFacadeREST{
+public class DietistaFacadeREST {
 
-      /**
+    /**
      * EJB que Hace Referencia a DiestistaInterface
      */
     @EJB
@@ -58,7 +60,7 @@ public class DietistaFacadeREST{
         }
         return dietistas;
     }
-    
+
     /**
      *
      * @param dni
@@ -86,6 +88,12 @@ public class DietistaFacadeREST{
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearDietista(Dietista dietista) {
         try {
+            Hash hash = new Hash();
+            //Cifrado cifrado = new Cifrado();
+            String contraseña;
+            //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
+            contraseña = hash.cifrarTexto(dietista.getContraseña());
+            dietista.setContraseña(contraseña);
             ejb.crearDietista(dietista);
         } catch (CreateException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
@@ -121,5 +129,3 @@ public class DietistaFacadeREST{
         }
     }
 }
-  
-   

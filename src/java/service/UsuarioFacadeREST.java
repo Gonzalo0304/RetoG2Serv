@@ -5,8 +5,20 @@
  */
 package service;
 
+import cifrado.Cifrado;
+import cifrado.Hash;
+import entities.Alimento;
+import entities.Dietista;
 import entities.Usuario;
+import excepciones.CreateException;
+import excepciones.DeleteException;
+import excepciones.ReadException;
+import excepciones.UpdateException;
+import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,68 +36,112 @@ import javax.ws.rs.core.MediaType;
  *
  * @author josue
  */
-@Stateless
 @Path("entities.usuario")
-public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
+public class UsuarioFacadeREST {
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
-    private EntityManager em;
+    /**
+     * EJB que Hace Referencia a DiestistaInterface
+     */
+    @EJB
+    private UsuarioInterface ejb;
 
-    public UsuarioFacadeREST() {
-        super(Usuario.class);
+    /**
+     *
+     * @return
+     */
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Collection<Usuario> getUsuarioTodos() {
+
+        Collection<Usuario> usuarios = null;
+        try {
+            usuarios = ejb.getUsuarioTodos();
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuarios;
     }
 
+    /**
+     *
+     * @param dni
+     * @return
+     */
+    /**
+    @GET
+    @Path("{dni}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario getUsuarioPorDni(@PathParam("dni") String dni) {
+        Usuario usuario = null;
+
+        try {
+            usuario = ejb.getUsuarioPorDni(dni);
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
+    }
+*/
+    /**
+     *
+     * @param dietista
+     */
     @POST
-    @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Usuario entity) {
-        super.create(entity);
+    public void crearUsuario(Usuario usuario) {
+        try {
+            Hash hash = new Hash();
+            //Cifrado cifrado = new Cifrado();
+            String contraseña;
+            //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
+            contraseña = hash.cifrarTexto(usuario.getContraseña());
+            usuario.setContraseña(contraseña);
+            ejb.crearUsuario(usuario);
+        } catch (CreateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    /**
+     *
+     * @param dietista
+     */
     @PUT
-    @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Usuario entity) {
-        super.edit(entity);
+    public void actualizarUsuario(Usuario usuario) {
+        try {
+            ejb.modificarUsuario(usuario);
+        } catch (UpdateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
+    /**
+     *
+     * @param dni
+     */
     @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Usuario find(@PathParam("id") String id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Usuario> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    @Path("{dni}")
+    //@Consumes({"application/xml"})
+    public void eliminarUsuario(@PathParam("dni") String dni) {
+        try {
+            ejb.eliminarUsuario(ejb.getUsuarioPorDni(dni));
+        } catch (DeleteException | ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
+        @GET
+    @Path("{email}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Collection<Usuario> getUsuarioPorEmail(@PathParam("email") String email) {
+        Collection<Usuario> usuario = null;
+
+        try {
+            usuario = ejb.getUsuarioPorEmail(email);
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
+    }
 }
