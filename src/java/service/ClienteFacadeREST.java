@@ -6,6 +6,7 @@
 package service;
 
 //import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
+import cifrado.Cifrado;
 import entities.Cliente;
 import entities.Dietista;
 import entities.Receta;
@@ -84,6 +85,12 @@ public class ClienteFacadeREST  {
    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
    public void crearCliente(Cliente cliente){
        try{
+                       Cifrado cifrado = new Cifrado();
+            String contrasenia;
+            //contrasenia= cifrado.descifrarTexto(usuario.getContrasenia());
+            contrasenia = cifrado.hashearMensaje(cliente.getContrasenia());
+            cliente.setContrasenia(contrasenia);
+            cliente.setContrasenia(contrasenia);
            ejb.crearCliente(cliente);
        } catch (CreateException ex) {
              Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);

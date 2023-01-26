@@ -5,6 +5,7 @@
  */
 package service;
 
+import cifrado.Cifrado;
 import entities.Administrador;
 import entities.Cliente;
 import entities.Dietista;
@@ -52,6 +53,12 @@ public class AdministradorFacadeREST{
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void createCliente(Cliente entity){
         try {
+                        Cifrado cifrado = new Cifrado();
+            String contrasenia;
+            //contrasenia= cifrado.descifrarTexto(usuario.getContraseña());
+            contrasenia = cifrado.hashearMensaje(entity.getContrasenia());
+            entity.setContrasenia(contrasenia);
+            entity.setContrasenia(contrasenia);
             ejb.crearCliente(entity);
         } catch (CreateException ex) {
             Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
