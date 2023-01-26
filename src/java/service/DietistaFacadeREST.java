@@ -88,11 +88,11 @@ public class DietistaFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearDietista(Dietista dietista) {
         try {
-            Hash hash = new Hash();
-            //Cifrado cifrado = new Cifrado();
+            Cifrado cifrado = new Cifrado();
             String contraseña;
             //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
-            contraseña = hash.cifrarTexto(dietista.getContraseña());
+            contraseña = cifrado.hashearMensaje(dietista.getContraseña());
+            dietista.setContraseña(contraseña);
             dietista.setContraseña(contraseña);
             ejb.crearDietista(dietista);
         } catch (CreateException ex) {

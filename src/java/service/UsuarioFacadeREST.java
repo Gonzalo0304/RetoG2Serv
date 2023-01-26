@@ -7,6 +7,7 @@ package service;
 
 import cifrado.Cifrado;
 import cifrado.Hash;
+import cifrado.Mail;
 import entities.Alimento;
 import entities.Dietista;
 import entities.Usuario;
@@ -90,11 +91,10 @@ public class UsuarioFacadeREST {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearUsuario(Usuario usuario) {
         try {
-            Hash hash = new Hash();
-            //Cifrado cifrado = new Cifrado();
+            Cifrado cifrado = new Cifrado();
             String contraseña;
             //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
-            contraseña = hash.cifrarTexto(usuario.getContraseña());
+            contraseña = cifrado.hashearMensaje(usuario.getContraseña());
             usuario.setContraseña(contraseña);
             ejb.crearUsuario(usuario);
         } catch (CreateException ex) {
@@ -135,13 +135,57 @@ public class UsuarioFacadeREST {
     @Path("{email}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Usuario> getUsuarioPorEmail(@PathParam("email") String email) {
-        Collection<Usuario> usuario = null;
+        List<Usuario> usuario = null;
+
 
         try {
-            usuario = ejb.getUsuarioPorEmail(email);
+            
+            usuario = (List<Usuario>) ejb.getUsuarioPorEmail(email);
+            
+            
+            //recuperarContrasenia(usuario.get(0));
         } catch (ReadException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
         return usuario;
     }
-}
+
+    public void recuperarContrasenia(Usuario usuario) {
+        String contrasenia = null,contrasenia2=null;
+
+        try {
+            Mail mail= new Mail();
+            Cifrado cifrado= new Cifrado();           
+            contrasenia= cifrado.generarContra();
+            mail.mandarMail(usuario.getEmail(), contrasenia);
+            contrasenia2= cifrado.hashearMensaje(contrasenia);
+            usuario.setContraseña(contrasenia2);           
+            ejb.modificarUsuario(usuario);
+            
+        } catch (UpdateException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+            @GET
+    @Path("{nombreAcceso}/{contraseña}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Collection<Usuario> getInicioSesion(@PathParam("nombreAcceso") String nombreAcceso, @PathParam("contraseña") String contraseña) {
+        List<Usuario> usuario = null;
+
+
+        try {
+                        Cifrado cifrado = new Cifrado();
+            contraseña= cifrado.hashearMensaje(contraseña);
+            usuario = (List<Usuario>) ejb.getInicioSesion(nombreAcceso,contraseña);
+            
+        } catch (ReadException ex) {
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
+    }
+
+
+    }
+    
+

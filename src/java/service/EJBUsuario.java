@@ -70,10 +70,10 @@ public class EJBUsuario implements UsuarioInterface {
 
     @Override
     public Collection getUsuarioPorEmail(String email) {
-        Collection<Usuario> usuario;
+        List<Usuario> usuario;
         usuario = em.createNamedQuery("getUsuarioPorEmail").setParameter("email", email).getResultList();
 
-        return null;
+        return usuario;
 
     }
 
@@ -86,6 +86,15 @@ public class EJBUsuario implements UsuarioInterface {
             throw new ReadException(e.getMessage());
         }
         return usuarios;
+    }
+
+    @Override
+    public Collection<Usuario> getInicioSesion(String nombreAcceso, String contraseña) throws ReadException {
+        List<Usuario> usuario;
+
+        usuario = em.createNamedQuery("getInicioSesion").setParameter("nombreAcceso", nombreAcceso).setParameter("contraseña", contraseña).getResultList();
+        return usuario;
+
     }
 
 }

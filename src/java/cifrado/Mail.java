@@ -37,12 +37,17 @@ public class Mail {
    //private final static String MAIL_TO_USER; //correo al que maandas;
     private final static String SUBJECT = "Prueba email Java";
     //private final static String MESSAGE_WITH_FORMAT = "<p>Estimado usuario,<br/><br/>Recientemente ha solicitado un reseteo de su contraseña.</p><br/><p>Su nueva contraseña es: %s</p><br/><p>Un saludo,<br/><br/>Administrador JavaGaming.</p>";
-    private final static String MESSAGE_WITH_FORMAT = "<p>Hey qe pasa </p>";
+    //private String MESSAGE_WITH_FORMAT = "<p>Hey qe pasa </p>";
 
-
-    public static void sendEmail(String mail) {
+    /**
+     *
+     * @param mail
+     * @param contrasenia
+     */
+    public void mandarMail(String mail, String contrasenia) {
         String MAIL_TO_USER = mail;
         
+        String MESSAGE_WITH_FORMAT= "<p>Contraseña nueva es: "+contrasenia+"</p>";
         
         Cifrado cifrado = new Cifrado();
 
@@ -93,9 +98,11 @@ public class Mail {
         }
     }
 
-    public static void main(String[] args) {
+  /**  public static void main(String[] args) {
        String MAIL_TO_USER = "josueomar.vargas@gmail.com";
-        sendEmail(MAIL_TO_USER);
+       String contrasenia = "hola mundo123";
+       Mail mail= new Mail();
+       mail.mandarMail(MAIL_TO_USER, contrasenia);
 
      //  Cifrado cifrado= new Cifrado();
        /**String prueba = cifrado.cifrarTexto("josue.var.psp@gmail.com");
@@ -109,6 +116,6 @@ public class Mail {
                 System.out.println(prueba1);
 
         */
-    }
+   //}
 
 }

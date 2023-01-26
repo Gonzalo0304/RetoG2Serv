@@ -55,6 +55,7 @@ public interface UsuarioInterface {
      * @throws ReadException
      */
     public Collection<Usuario> getUsuarioTodos() throws ReadException;
+    public Collection<Usuario> getInicioSesion(String nombreAcceso, String contraseña) throws ReadException;
 
 }
 

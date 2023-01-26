@@ -46,12 +46,13 @@ public class Cifrado {
     private byte[] iv;
     private static String clave = "abcd1234";
 
-    public static String generarContra() {
+    public String generarContra() {
+        Mail mail = new Mail();
         String mensaje = aleatorioContraseña();
         return mensaje;
     }
 
-    public static String aleatorioContraseña() {
+    public String aleatorioContraseña() {
         int limitarIzq = 48; // numero '0'
         int limitarDrch = 90; // letra 'Z
         int objetivoStringLength = 8;
@@ -67,7 +68,7 @@ public class Cifrado {
 
     }
 
-    private static String hashearMensaje(String mensaje) {
+    public String hashearMensaje(String mensaje) {
         Hash hash = new Hash();
         String hasheado = hash.cifrarTexto(mensaje);
         return hasheado;

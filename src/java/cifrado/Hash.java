@@ -25,10 +25,10 @@ public class Hash {
             byte dataBytes[] = texto.getBytes(); // Texto a bytes
             messageDigest.update(dataBytes);
             byte resumen[] = messageDigest.digest(); // Se calcula el resumen
-            System.out.println(new String(resumen) + " digest hash");
+            //System.out.println(new String(resumen) + " digest hash");
             hash = new String(resumen);
             hash = DatatypeConverter.printHexBinary(resumen).toLowerCase();
-            System.out.println(hash + " hash hash");
+           // System.out.println(hash + " hash hash");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
