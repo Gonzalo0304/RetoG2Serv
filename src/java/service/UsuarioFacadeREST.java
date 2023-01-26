@@ -92,10 +92,10 @@ public class UsuarioFacadeREST {
     public void crearUsuario(Usuario usuario) {
         try {
             Cifrado cifrado = new Cifrado();
-            String contraseña;
-            //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
-            contraseña = cifrado.hashearMensaje(usuario.getContraseña());
-            usuario.setContraseña(contraseña);
+            String contrasenia;
+            //contrasenia= cifrado.descifrarTexto(usuario.getContrasenia());
+            contrasenia = cifrado.hashearMensaje(usuario.getContrasenia());
+            usuario.setContrasenia(contrasenia);
             ejb.crearUsuario(usuario);
         } catch (CreateException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,7 +159,7 @@ public class UsuarioFacadeREST {
             contrasenia= cifrado.generarContra();
             mail.mandarMail(usuario.getEmail(), contrasenia);
             contrasenia2= cifrado.hashearMensaje(contrasenia);
-            usuario.setContraseña(contrasenia2);           
+            usuario.setContrasenia(contrasenia2);           
             ejb.modificarUsuario(usuario);
             
         } catch (UpdateException ex) {
@@ -168,16 +168,16 @@ public class UsuarioFacadeREST {
 
     }
             @GET
-    @Path("{nombreAcceso}/{contraseña}")
+    @Path("{nombreAcceso}/{contrasenia}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Collection<Usuario> getInicioSesion(@PathParam("nombreAcceso") String nombreAcceso, @PathParam("contraseña") String contraseña) {
+    public Collection<Usuario> getInicioSesion(@PathParam("nombreAcceso") String nombreAcceso, @PathParam("contrasenia") String contrasenia) {
         List<Usuario> usuario = null;
 
 
         try {
                         Cifrado cifrado = new Cifrado();
-            contraseña= cifrado.hashearMensaje(contraseña);
-            usuario = (List<Usuario>) ejb.getInicioSesion(nombreAcceso,contraseña);
+            contrasenia= cifrado.hashearMensaje(contrasenia);
+            usuario = (List<Usuario>) ejb.getInicioSesion(nombreAcceso,contrasenia);
             
         } catch (ReadException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);

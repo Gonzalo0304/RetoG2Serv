@@ -89,10 +89,10 @@ public class EJBUsuario implements UsuarioInterface {
     }
 
     @Override
-    public Collection<Usuario> getInicioSesion(String nombreAcceso, String contraseña) throws ReadException {
+    public Collection<Usuario> getInicioSesion(String nombreAcceso, String contrasenia) throws ReadException {
         List<Usuario> usuario;
 
-        usuario = em.createNamedQuery("getInicioSesion").setParameter("nombreAcceso", nombreAcceso).setParameter("contraseña", contraseña).getResultList();
+        usuario = em.createNamedQuery("getInicioSesion").setParameter("nombreAcceso", nombreAcceso).setParameter("contrasenia", contrasenia).getResultList();
         return usuario;
 
     }

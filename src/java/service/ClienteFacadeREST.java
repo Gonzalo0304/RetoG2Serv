@@ -86,11 +86,11 @@ public class ClienteFacadeREST  {
    public void crearCliente(Cliente cliente){
        try{
                        Cifrado cifrado = new Cifrado();
-            String contraseña;
-            //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
-            contraseña = cifrado.hashearMensaje(cliente.getContraseña());
-            cliente.setContraseña(contraseña);
-            cliente.setContraseña(contraseña);
+            String contrasenia;
+            //contrasenia= cifrado.descifrarTexto(usuario.getContrasenia());
+            contrasenia = cifrado.hashearMensaje(cliente.getContrasenia());
+            cliente.setContrasenia(contrasenia);
+            cliente.setContrasenia(contrasenia);
            ejb.crearCliente(cliente);
        } catch (CreateException ex) {
              Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);

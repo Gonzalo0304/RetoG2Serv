@@ -54,11 +54,11 @@ public class AdministradorFacadeREST{
     public void createCliente(Cliente entity){
         try {
                         Cifrado cifrado = new Cifrado();
-            String contraseña;
-            //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
-            contraseña = cifrado.hashearMensaje(entity.getContraseña());
-            entity.setContraseña(contraseña);
-            entity.setContraseña(contraseña);
+            String contrasenia;
+            //contrasenia= cifrado.descifrarTexto(usuario.getContraseña());
+            contrasenia = cifrado.hashearMensaje(entity.getContrasenia());
+            entity.setContrasenia(contrasenia);
+            entity.setContrasenia(contrasenia);
             ejb.crearCliente(entity);
         } catch (CreateException ex) {
             Logger.getLogger(AdministradorFacadeREST.class.getName()).log(Level.SEVERE, null, ex);

@@ -89,11 +89,11 @@ public class DietistaFacadeREST {
     public void crearDietista(Dietista dietista) {
         try {
             Cifrado cifrado = new Cifrado();
-            String contraseña;
-            //contraseña= cifrado.descifrarTexto(usuario.getContraseña());
-            contraseña = cifrado.hashearMensaje(dietista.getContraseña());
-            dietista.setContraseña(contraseña);
-            dietista.setContraseña(contraseña);
+            String contrasenia;
+            //contrasenia= cifrado.descifrarTexto(usuario.getContrasenia());
+            contrasenia = cifrado.hashearMensaje(dietista.getContrasenia());
+            dietista.setContrasenia(contrasenia);
+            dietista.setContrasenia(contrasenia);
             ejb.crearDietista(dietista);
         } catch (CreateException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);

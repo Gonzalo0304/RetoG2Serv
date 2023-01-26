@@ -26,6 +26,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -39,7 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
        @NamedQuery(name = "getUsuarioTodos", query = "SELECT u FROM Usuario AS u")
 ,
-           @NamedQuery(name = "getInicioSesion", query = "SELECT u FROM Usuario AS u WHERE u.nombreAcceso=:nombreAcceso AND u.contraseña=:contraseña")
+           @NamedQuery(name = "getInicioSesion", query = "SELECT u FROM Usuario AS u WHERE u.nombreAcceso=:nombreAcceso AND u.contrasenia=:contrasenia")
 ,
     @NamedQuery(name = "getUsuarioPorEmail", query = "SELECT u FROM Usuario AS u WHERE u.email = :email")
 })
@@ -52,7 +53,7 @@ public class Usuario implements Serializable {
 
     private String nombreAcceso;
 
-    private String contraseña;
+    private String contrasenia;
 
     private String nombre;
 
@@ -82,12 +83,12 @@ public class Usuario implements Serializable {
         this.nombreAcceso = nombreAcceso;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public String getNombre() {
