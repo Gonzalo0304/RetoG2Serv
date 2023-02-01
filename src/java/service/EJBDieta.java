@@ -34,7 +34,7 @@ public class EJBDieta implements DietaInterface {
 
     @Override
     public void eliminarDieta(Dieta dieta) throws DeleteException {
-        em.remove(dieta);
+        em.remove(em.merge(dieta));
     }
 
     @Override
