@@ -31,18 +31,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+ * RESTful Servicio Web para enseñar las opreaciones CRUD de la Clase Dieta
+ * mendiante la entidad
  * @author Gonzalo
  */
 
 @Path("entities.dieta")
 public class DietaFacadeREST{
 
-
+    /**
+     * EJB que Hace Referencia a DietaInterface
+     */
     @EJB
     private DietaInterface ejb;
 
 
+    /**
+     * Metodo POST RESTful crea un objeto de Dieta y lo representa en un XML
+     * @param entity 
+     */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Dieta entity) {
@@ -54,13 +61,12 @@ public class DietaFacadeREST{
         }
     }
 
-    /*@PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Dieta entity) {
-        super.edit(entity);
-    }*/
-
+    /**
+    /**
+     * Metodo PUT RESTful modifica un objeto de Dieta de la base de Datos y
+     * lo representa en un XML
+     * @param dieta 
+     */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(Dieta dieta) {
@@ -72,6 +78,11 @@ public class DietaFacadeREST{
         }
     }
 
+    /**
+     * Metodo DELETE RESTful elimina un objeto de la entidad Dieta de la base
+     * de Datos y lo representa en un XML
+     * @param dni 
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") String dni) {
@@ -85,6 +96,12 @@ public class DietaFacadeREST{
         }
     }
 
+    /**
+     * Metodo GET RESTful lee un objeto dieta por su Id y lo representa en un
+     * XML
+     * @param id
+     * @return 
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -98,6 +115,12 @@ public class DietaFacadeREST{
         return null;
     }
     
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta por su nombre y lo
+     * representa en un XML
+     * @param nombre
+     * @return 
+     */
     @GET
     @Path("FindNombre/{nombre}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -111,6 +134,12 @@ public class DietaFacadeREST{
         return null;
     }
     
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta por su tipo y lo
+     * representa en un XML
+     * @param tipo
+     * @return 
+     */
     @GET
     @Path("FindTipo/{tipo}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -124,6 +153,12 @@ public class DietaFacadeREST{
         return null;
     }
     
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta por su objetivo y lo
+     * representa en un XML
+     * @param objetivo
+     * @return 
+     */
     @GET
     @Path("FindObjetivo/{objetivo}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -137,6 +172,11 @@ public class DietaFacadeREST{
         return null;
     }
 
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta y lo representa en
+     * un XML
+     * @return 
+     */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Dieta> findAll() {
@@ -148,6 +188,13 @@ public class DietaFacadeREST{
         return null;
     }
     
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta si esta entre los
+     * tiempos dados y lo representa en un XML
+     * @param from
+     * @param to
+     * @return 
+     */
     @GET
     @Path("FindRange/{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -161,6 +208,12 @@ public class DietaFacadeREST{
         return null;
     }
    
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta si es inferior a el
+     * el tiempo dado y lo representa en un XML
+     * @param from
+     * @return 
+     */
     @GET
     @Path("FindMin/{from}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -174,6 +227,12 @@ public class DietaFacadeREST{
         return null;
     }
     
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta si es superior a el
+     * tiempo dado y lo representa en un XML
+     * @param to
+     * @return 
+     */
     @GET
     @Path("FindMax/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -186,10 +245,4 @@ public class DietaFacadeREST{
         }
         return null;
     }
-
-   /* @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }*/
-
 }

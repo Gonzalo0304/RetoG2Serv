@@ -32,33 +32,42 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "DIETA", schema = "nutrivago")
 @NamedQueries({
-    @NamedQuery(name="getDietaTodos", query= "SELECT d FROM Dieta d"),
-    @NamedQuery(name="getDietaPorId", query= "SELECT d FROM Dieta d WHERE idDieta = :idDieta"),
-    @NamedQuery(name="getDietaPorNombre", query= "SELECT d FROM Dieta d WHERE nombre = :nombreDieta"),
-    @NamedQuery(name="getDietaPorTipo", query= "SELECT d FROM Dieta d WHERE tipo = :tipoDieta"),
-    @NamedQuery(name="getDietaPorObjetivo", query= "SELECT d FROM Dieta d WHERE Objetivo = :objetivoDieta"),
+    /**
+     * Consultas Querys de la tabla Alimento
+     */
+    @NamedQuery(name = "getDietaTodos", query = "SELECT d FROM Dieta d")
+    ,
+    @NamedQuery(name = "getDietaPorId", query = "SELECT d FROM Dieta d WHERE idDieta = :idDieta")
+    ,
+    @NamedQuery(name = "getDietaPorNombre", query = "SELECT d FROM Dieta d WHERE nombre = :nombreDieta")
+    ,
+    @NamedQuery(name = "getDietaPorTipo", query = "SELECT d FROM Dieta d WHERE tipo = :tipoDieta")
+    ,
+    @NamedQuery(name = "getDietaPorObjetivo", query = "SELECT d FROM Dieta d WHERE Objetivo = :objetivoDieta")
+    ,
     
-    @NamedQuery(name="getDietaPorTiempoSuperior", query= "SELECT d FROM Dieta d WHERE Tiempo>tiempoDieta"),
-    @NamedQuery(name="getDietaPorTiempoMinimo", query= "SELECT d FROM Dieta d WHERE Tiempo<tiempoDieta"),
-    @NamedQuery(name="getDietaPorTiempoEntre", query= "SELECT d FROM Dieta d WHERE Tiempo<= :tiempoDietaMax and Tiempo>= :tiempoDietaMin"),
-})
+    @NamedQuery(name = "getDietaPorTiempoSuperior", query = "SELECT d FROM Dieta d WHERE Tiempo>tiempoDieta")
+    ,
+    @NamedQuery(name = "getDietaPorTiempoMinimo", query = "SELECT d FROM Dieta d WHERE Tiempo<tiempoDieta")
+    ,
+    @NamedQuery(name = "getDietaPorTiempoEntre", query = "SELECT d FROM Dieta d WHERE Tiempo<= :tiempoDietaMax and Tiempo>= :tiempoDietaMin"),})
 @XmlRootElement
-public class Dieta implements Serializable{
-    
+public class Dieta implements Serializable {
+
     @Id
     private String idDieta;
     private String nombre;
     private Integer tiempo;
     @Enumerated(EnumType.STRING)
     private Objetivo OBJETIVO;
-    
+
     /**
      * @associates <{uml.Dietista}>
      */
-        @JsonIgnore
+    @JsonIgnore
     @ManyToOne
     private Dietista dietista;
-    
+
     /**
      * @associates <{uml.Receta}>
      */
@@ -71,8 +80,8 @@ public class Dieta implements Serializable{
     /**
      * @associates <{uml.ClienteDieta}>
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade=ALL,mappedBy = "dieta")
-    private Collection <ClienteDieta> listaCliente;
+    @OneToMany(fetch = FetchType.EAGER, cascade = ALL, mappedBy = "dieta")
+    private Collection<ClienteDieta> listaCliente;
 
     public Dieta() {
         super();
@@ -111,11 +120,11 @@ public class Dieta implements Serializable{
     }
 
     @XmlTransient
-    public Collection <Receta> getListaReceta() {
+    public Collection<Receta> getListaReceta() {
         return listaReceta;
     }
 
-    public void setListaReceta(Collection <Receta> listaReceta) {
+    public void setListaReceta(Collection<Receta> listaReceta) {
         this.listaReceta = listaReceta;
     }
 
@@ -128,13 +137,14 @@ public class Dieta implements Serializable{
     }
 
     @XmlTransient
-    public Collection <ClienteDieta> getListaCliente() {
+    public Collection<ClienteDieta> getListaCliente() {
         return listaCliente;
     }
 
-    public void setListaCliente(Collection <ClienteDieta> listaCliente) {
+    public void setListaCliente(Collection<ClienteDieta> listaCliente) {
         this.listaCliente = listaCliente;
     }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -154,7 +164,7 @@ public class Dieta implements Serializable{
         }
         return true;
     }
-    
+
     @Override
     public String toString() {
         return "Entities.NewEntity[ id=" + idDieta + " ]";
