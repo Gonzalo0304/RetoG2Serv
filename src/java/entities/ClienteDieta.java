@@ -23,29 +23,47 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Gonzalo
+ * @author jon
  */
 @Entity
 @Table(name = "CLIENTEDIETA", schema = "nutrivago")
 @NamedQueries({
+    /**
+     * query que devuelve todas las dietas que estan asociadas  cientes
+     */
     @NamedQuery(name="getClienteDietaTodos", query="SELECT cd FROM ClienteDieta AS cd")
 })
 @XmlRootElement
 public class ClienteDieta implements Serializable {
+    /**
+     * id de la dieta
+     */
     @EmbeddedId 
     private CltDietID idClienteDieta;
     @MapsId("idDiet")
+    /**
+     * id del cliente
+     */
         @JsonIgnore
     @ManyToOne
     private Dieta dieta;
     @MapsId("idClt")
+    /**
+     * cliente que tiene la dieta
+     */
     @JsonIgnore
     @ManyToOne
     private Cliente cliente;
+    /**
+     * fecha en la que empieza la dieta
+     */
     @Temporal(TemporalType.TIMESTAMP)
     @JsonSerialize(as=Date.class)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date fechaInicio;
+    /**
+     * fecha en la que termina la dieta
+     */
     @Temporal(TemporalType.TIMESTAMP)
     @JsonSerialize(as=Date.class)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")

@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author josue
+ * @author jon
  */
 
 @Path("entities.receta")
@@ -48,7 +48,12 @@ public class RecetaFacadeREST  {
     public RecetaFacadeREST() {
        // super(Receta.class);
     }
-
+/**
+     * Este método devuelve la receta que tenga un ID específico.
+     *
+     * @param id
+     * @return Coleccion de recetas
+     */
   @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -62,7 +67,11 @@ public class RecetaFacadeREST  {
         }
         return receta;
     }
-    
+    /**
+     * Este método devuelve una colección con todas las recetas existentes.
+     *
+     * @return Coleccion de recetas
+     */
       @GET
      // @Path("nombreDietistae")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -76,7 +85,11 @@ public class RecetaFacadeREST  {
         }
         return receta;
     }
-    
+    /**
+     * Este método devuelve una colección de recetas ordenadas alfabéticamente.
+     *
+     * @return Coleccion de recetas
+     */
      
         @GET
         @Path("nombreDietista/ordenadoAlfabeticamente")
@@ -93,7 +106,12 @@ public class RecetaFacadeREST  {
     }
     
     
-        
+          /**
+     * Este método devuelve una colección de recetas ordenadas por fecha de
+     * creación.
+     *
+     * @return Coleccion de recetas
+     */
         @GET
         @Path("nombreDietista/ordenadoFecha")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -110,7 +128,12 @@ public class RecetaFacadeREST  {
     
     
     
-  
+  /**
+     *  Este método devuelve una colección de recetas creadas por un dietista con un nombre específico.
+
+     * @param nombre
+     * @return Coleccion de recetas
+     */
     
     
     
@@ -127,7 +150,11 @@ public class RecetaFacadeREST  {
         }
         return receta;
     }
-    
+    /**
+     * Este método devuelve una colección de recetas con un nombre específico.
+     * @param nombreReceta
+     * @return Coleccion de recetas
+     */
                @GET
           @Path("nombreReceta/{nombreReceta}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -141,7 +168,11 @@ public class RecetaFacadeREST  {
         }
         return receta;
     }
-    
+    /**
+     *Este método devuelve una colección de recetas con un tipo específico.
+     * @param tipoReceta
+     * @return cColeccion de recetas
+     */
                @GET
           @Path("tipoReceta/{tipoReceta}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -155,7 +186,10 @@ public class RecetaFacadeREST  {
         }
         return receta;
     }
-    
+     /**
+     * Este método crea una nueva receta.
+     * @param receta a crear
+     */
    @POST
    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
    public void crearReceta(Receta receta){
@@ -165,7 +199,10 @@ public class RecetaFacadeREST  {
              Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
          }
    }
-    
+     /**
+     * Este método modifica una receta existente.
+     * @param receta a modificar
+     */
     @PUT
      @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
      public void modificarReceta(Receta receta){
@@ -175,6 +212,10 @@ public class RecetaFacadeREST  {
              Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
          }
      }
+      /**
+     *Este método borra una receta
+     * @param id de la receta a borrar
+     */
          @DELETE
         // @Consumes({"application/xml"})
     @Path("{id}")
