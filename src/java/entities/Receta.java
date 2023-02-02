@@ -37,21 +37,36 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "RECETA", schema = "nutrivago")
 
 @NamedQueries({
+    /**
+     * query para obtener todas las recetas y sus dietistas
+     */
  @NamedQuery(name="getRecetaTodos", query= "SELECT r FROM Receta AS r"),
-    
+    /**
+     * query para obtener todas las recetas y sus dietistas ordenadas alfabeticamente
+     */
     @NamedQuery(name="getRecetasAlfabeticamente", query= "SELECT r FROM Receta AS r WHERE r.dietista.dni in (SELECT u FROM Usuario u WHERE r.dietista.dni = u.dni ) ORDER BY r.nombre "),
-    
+     /**
+     * query para obtener todas las recetas y sus dietistas ordenadas por fecha de creacion
+     */
     @NamedQuery(name="getRecetaFechaCreacion", query= "SELECT r FROM Receta AS r WHERE r.dietista.dni in (SELECT u FROM Usuario u WHERE r.dietista.dni = u.dni ) ORDER BY r.fechaCreacion DESC"),
     
-    
+    /**
+     * query para obtener una receta junto a su dietista por su id
+     */
     
     @NamedQuery(name="getRecetaPorId", query= "SELECT r FROM Receta AS r WHERE r.idReceta = :idReceta"),
-    
+    /**
+     * query para obtener todas las recetas y sus dietistas por el nombre del dietista
+     */
    
     @NamedQuery(name="getRecetaNombreDietista", query= "SELECT r FROM Receta AS r WHERE r.dietista.dni in (SELECT u FROM Usuario u WHERE r.dietista.dni = u.dni AND u.nombre =:nombreDietista)"),
-       
+       /**
+     * query para obtener todas las recetas y sus dietistas por el nombre de la receta
+     */
  @NamedQuery(name="getNombreReceta", query= "SELECT r FROM Receta AS r WHERE r.dietista.dni in (SELECT u FROM Usuario u WHERE r.dietista.dni = u.dni )AND r.nombre=:nombreReceta"),
- 
+ /**
+     * query para obtener todas las recetas y sus dietistas por el tipo de receta
+     */
  @NamedQuery(name="getRecetaTipo", query= "SELECT r FROM Receta AS r WHERE r.dietista.dni in (SELECT u FROM Usuario u WHERE r.dietista.dni = u.dni )AND r.TIPO=:tipoReceta")
        
  //FALLO
@@ -59,14 +74,28 @@ import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
 public class Receta implements Serializable {
-
+/**
+ * idReceta: es la clave primaria de la entidad y es un identificador único para cada receta.
+ */
     @Id
     private String idReceta;
+    /**
+     * nombre: es el nombre de la receta.
+     */
     private String nombre;
+    /**
+     * preparacion: descripcion de como preparar la receta
+     */
     private String preparacion;
+    /**
+     * fechaCreacion: fecha en la que se crea la receta
+     */
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
     @Enumerated(EnumType.STRING)
+    /**
+     *tipo: tipo de dieta
+     */
     private TipoDieta TIPO;
 
     /**

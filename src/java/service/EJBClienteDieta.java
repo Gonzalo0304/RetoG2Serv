@@ -18,14 +18,18 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author somor
+ * @author jon
  */
 @Stateless
 public class EJBClienteDieta implements ClienteDietaInterface{
     
      @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
-
+/**
+ * Este método crea un cliente con su dieta
+ * @param clienteDieta ha crear
+ * @throws CreateException Lanza una excepción de tipo CreateException si hay un problema en la creación del cliente dieta.
+ */
     @Override
     public void crearClienteDieta(ClienteDieta clienteDieta) throws CreateException {
         try {
@@ -34,6 +38,11 @@ public class EJBClienteDieta implements ClienteDietaInterface{
             throw new CreateException(e.getMessage());
         }
     }
+    /**
+ * Este método elimina un cliente con su dieta
+     * @param clienteDieta ha eliminar
+     * @throws DeleteException Lanza una excepción de tipo DeleteException si hay un problema en el borrado clienteDieta.
+     */
 
     @Override
     public void eliminarClienteDieta(ClienteDieta clienteDieta) throws DeleteException {
@@ -43,7 +52,11 @@ public class EJBClienteDieta implements ClienteDietaInterface{
             throw new DeleteException(e.getMessage());
         }
     }
-
+/**
+ * Este método modifica un cliente con su dieta
+ * @param clienteDieta ha modificar
+    * @throws UpdateException Lanza una excepción de tipo UpdateException si hay un problema en la actualización de clienteDieta.
+ */
     @Override
     public void modificarClienteDieta(ClienteDieta clienteDieta) throws UpdateException {
        try {
@@ -54,7 +67,13 @@ public class EJBClienteDieta implements ClienteDietaInterface{
             throw new UpdateException(e.getMessage());
         }
     }
-
+/**
+ * Metodo que devuelve un clienteDieta por el id de ambos
+ * @param idCliente del cliente
+ * @param idDieta de la dieta
+ * @return el cliente y la dieta que tien
+       * @throws ReadException Lanza una excepción de tipo ReadException si hay un problema en la lectura de los datos.
+ */
     @Override
     public ClienteDieta getClienteDietaPorIdClienteIdDieta(String idCliente, String idDieta) throws ReadException {
         ClienteDieta clienteDieta = null;
@@ -75,7 +94,11 @@ public class EJBClienteDieta implements ClienteDietaInterface{
          return clienteDieta;
     
     }
-
+/**
+ * Este metodo devuelve todos los clientes y sus dietas
+ * @return colecion de clientes y dietas
+       * @throws ReadException Lanza una excepción de tipo ReadException si hay un problema en la lectura de los datos.
+ */
     @Override
     public Collection<ClienteDieta> getClienteDietaTodos() throws ReadException {
         List<ClienteDieta> listaClienteDieta = null;

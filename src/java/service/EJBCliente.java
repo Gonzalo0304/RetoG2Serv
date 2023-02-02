@@ -21,14 +21,18 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author somor
+ * @author jon
  */
 @Stateless
 public class EJBCliente implements ClienteInterface{
     
     @PersistenceContext(unitName = "Reto2G2ServPU")
     private EntityManager em;
-    
+    /**
+     * Este método devuelve una colección con todos los clientes existentes.
+     * @return Coleccion de clientes
+     * @throws ReadException Lanza una excepción de tipo ReadException si hay un problema en la lectura de los datos.
+     */
 
     @Override
     public Collection<Cliente> getClienteTodos() throws ReadException {
@@ -42,7 +46,11 @@ public class EJBCliente implements ClienteInterface{
         return clientes;
        
     }
-
+/**
+ * Este método devuelve el cliente que tenga un ID específico.
+     * @return Coleccion de clientes
+     * @throws ReadException Lanza una excepción de tipo ReadException si hay un problema en la lectura de los datos.
+     */
     @Override
     public Cliente getClientePorId(String idCliente) throws ReadException {
         Cliente cliente;
@@ -55,7 +63,13 @@ public class EJBCliente implements ClienteInterface{
         
         return cliente;
     }
+/**
+ * Este método crea un nuevo cliente.
 
+ * @param cliente
+ * @throws CreateException Lanza una excepción de tipo CreateException si hay un problema en la creación del cliente.
+
+ */
     @Override
     public void crearCliente(Cliente cliente) throws CreateException {
        try {
@@ -64,7 +78,13 @@ public class EJBCliente implements ClienteInterface{
             throw new CreateException(e.getMessage());
         }
     }
-    
+     /**
+    * Este método modifica cliente existente.
+
+    * @param cliente
+    * @throws UpdateException Lanza una excepción de tipo UpdateException si hay un problema en la actualización del cliente.
+
+    */
     
       @Override
      public void modificarCliente(Cliente cliente) throws UpdateException{
@@ -76,7 +96,12 @@ public class EJBCliente implements ClienteInterface{
             throw new UpdateException(e.getMessage());
         }
      }
+ /**
+     * Este método borra un cliente
+     * @param cliente
+     * @throws DeleteException Lanza una excepción de tipo DeleteException si hay un problema en el borrado del cliente.
 
+     */
     @Override
     public void borrarCliente(Cliente cliente) throws DeleteException {
        try{
