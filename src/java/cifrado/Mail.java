@@ -30,11 +30,13 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class Mail {
 
+    private static final String CORREO = ResourceBundle.getBundle("cifrado.usuario").getString("correo");
+    private static final String CONTRA = ResourceBundle.getBundle("cifrado.usuario").getString("contra");
     private final static String SMTP_HOST = "smtp.gmail.com";
     private final static String SMTP_PORT = "587";//25,465,587
-   // private final static String MAIL_FROM_USER = "josue.var.psp@gmail.com";//email desde el que se envía el correo. Tienes que crearlo y configurar la cuenta de acuerdo al documento que subieron de PSP
+    // private final static String MAIL_FROM_USER = "josue.var.psp@gmail.com";//email desde el que se envía el correo. Tienes que crearlo y configurar la cuenta de acuerdo al documento que subieron de PSP
     //private final static String MAIL_PASS = "jyrhrrxbzugbnnsa";//contraseña del email que te has creado
-   //private final static String MAIL_TO_USER; //correo al que maandas;
+    //private final static String MAIL_TO_USER; //correo al que maandas;
     private final static String SUBJECT = "Prueba email Java";
     //private final static String MESSAGE_WITH_FORMAT = "<p>Estimado usuario,<br/><br/>Recientemente ha solicitado un reseteo de su contraseña.</p><br/><p>Su nueva contraseña es: %s</p><br/><p>Un saludo,<br/><br/>Administrador JavaGaming.</p>";
     //private String MESSAGE_WITH_FORMAT = "<p>Hey qe pasa </p>";
@@ -46,15 +48,15 @@ public class Mail {
      */
     public void mandarMail(String mail, String contrasenia) {
         String MAIL_TO_USER = mail;
-        
-        String MESSAGE_WITH_FORMAT= "<p>Contraseña nueva es: "+contrasenia+"</p>";
-        
+
+        String MESSAGE_WITH_FORMAT = "<p>Contraseña nueva es: " + contrasenia + "</p>";
+
         Cifrado cifrado = new Cifrado();
 
         //desencriptar Fichero 
-        String MAIL_FROM_USER = cifrado.descifrarTexto("src/java/cifrado/correo.properties");
-        String MAIL_PASS = cifrado.descifrarTexto("src/java/cifrado/contra.properties");
-        
+        String MAIL_FROM_USER = cifrado.descifrarTexto(CORREO);
+        String MAIL_PASS = cifrado.descifrarTexto(CONTRA);
+
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", true);
         properties.put("mail.smtp.starttls.enable", "true");
@@ -84,7 +86,7 @@ public class Mail {
             //parte de un mensaje
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
 
-             String messageBody = String.format(MESSAGE_WITH_FORMAT);
+            String messageBody = String.format(MESSAGE_WITH_FORMAT);
             mimeBodyPart.setContent(messageBody, "text/html");
             multiPart.addBodyPart(mimeBodyPart);
             //añadimos las partes al mensaje MIME
@@ -98,24 +100,32 @@ public class Mail {
         }
     }
 
-  /**  public static void main(String[] args) {
-       String MAIL_TO_USER = "josueomar.vargas@gmail.com";
-       String contrasenia = "hola mundo123";
-       Mail mail= new Mail();
-       mail.mandarMail(MAIL_TO_USER, contrasenia);
 
-     //  Cifrado cifrado= new Cifrado();
-       /**String prueba = cifrado.cifrarTexto("josue.var.psp@gmail.com");
-        System.out.println("CORREO="+prueba);
-        prueba= cifrado.descifrarTexto();
-                System.out.println(prueba);
-        */
-       /** String prueba1 = cifrado.cifrarTexto("jyrhrrxbzugbnnsa");
-        System.out.println("CONTRA="+prueba1);
-        prueba1= cifrado.descifrarTexto();
-                System.out.println(prueba1);
-
-        */
-   //}
+    /*
+          public static void main(String[] args) { 
+              String MAIL_TO_USER =
+      "josueomar.vargas@gmail.com"; 
+          String contrasenia = "hola mundo123";
+      Mail
+      mail= new Mail(); mail.mandarMail(MAIL_TO_USER, contrasenia);
+         }
+    */
+    /**
+     * public static void main(String[] args) { String MAIL_TO_USER =
+     * "josueomar.vargas@gmail.com"; String contrasenia = "hola mundo123"; Mail
+     * mail= new Mail(); mail.mandarMail(MAIL_TO_USER, contrasenia);
+     *
+     * // Cifrado cifrado= new Cifrado(); /**String prueba =
+     * cifrado.cifrarTexto("josue.var.psp@gmail.com");
+     * System.out.println("CORREO="+prueba); prueba= cifrado.descifrarTexto();
+     * System.out.println(prueba);
+     */
+    /**
+     * String prueba1 = cifrado.cifrarTexto("jyrhrrxbzugbnnsa");
+     * System.out.println("CONTRA="+prueba1); prueba1= cifrado.descifrarTexto();
+     * System.out.println(prueba1);
+     *
+     */
+    //}
 
 }

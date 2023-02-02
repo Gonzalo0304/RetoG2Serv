@@ -7,7 +7,6 @@ import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

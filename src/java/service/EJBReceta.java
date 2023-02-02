@@ -3,6 +3,7 @@ package service;
 import entities.Alimento;
 import entities.Receta;
 import entities.TipoAlimento;
+import entities.TipoDieta;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
@@ -80,9 +81,10 @@ public class EJBReceta implements RecetaInterface {
     }
     
         @Override
-    public Collection<Receta> getRecetaTipo(String tipoReceta) throws ReadException {
+    public Collection<Receta> getRecetaTipo(String tipoReceta1) throws ReadException {
        Collection <Receta> recetas = null;
-       
+               TipoDieta tipoReceta = null;
+        tipoReceta = tipoReceta.valueOf(tipoReceta1.toUpperCase());
        try {
             recetas = em.createNamedQuery("getRecetaTipo").setParameter("tipoReceta", tipoReceta).getResultList();
         } catch (Exception e) {
