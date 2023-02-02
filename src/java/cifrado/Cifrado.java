@@ -43,9 +43,9 @@ import sun.misc.BASE64Encoder;
  * @author josue
  */
 public class Cifrado {
+    //Claves 
     private static final String CLAVEPRIVADA= ResourceBundle.getBundle("cifrado.clavePrivada").getString("clave");
     private static final String CLAVEPUBLICA= ResourceBundle.getBundle("cifrado.clavePublica").getString("clave");
-    private static final String CORREO= ResourceBundle.getBundle("cifrado.usuario").getString("correo");
 
     
 
@@ -54,12 +54,19 @@ public class Cifrado {
     private byte[] iv;
     private static String clave = "abcd*1234";
 
+    /**
+     *Genera Contraseña
+     * @return
+     */
     public String generarContra() {
-        Mail mail = new Mail();
         String mensaje = aleatorioContraseña();
         return mensaje;
     }
 
+    /**
+     * Crear un contraseña aleatoria
+     * @return
+     */
     public String aleatorioContraseña() {
         int limitarIzq = 48; // numero '0'
         int limitarDrch = 90; // letra 'Z
@@ -76,17 +83,32 @@ public class Cifrado {
 
     }
 
+    /**
+     * llama al metodo hash para hashear un mensaje 
+     * @param mensaje es un String
+     * @return
+     */
     public String hashearMensaje(String mensaje) {
         Hash hash = new Hash();
         String hasheado = hash.cifrarTexto(mensaje);
         return hasheado;
     }
+
+    /**
+     * genera la clave simetrica
+     * @return
+     */
     public SecretKey  addKey(){
         byte[] valuebytes = clave.getBytes();            
        SecretKey key = new SecretKeySpec( Arrays.copyOf( valuebytes, 16 ) , "AES" );      
     return key;
     }
     
+    /**
+     *Cifra el mensaje mediante clave simetrica
+     * @param mensaje
+     * @return
+     */
     public String cifrarTexto(String mensaje) {
                 String value="";
         try {
@@ -112,6 +134,11 @@ public class Cifrado {
 
     }
 
+    /**
+     *Descifra el mensaje con clave simetrica
+     * @param mensaje
+     * @return
+     */
     public String descifrarTexto(String mensaje) {
         String str="";        
         try {
@@ -168,6 +195,14 @@ public class Cifrado {
             e.printStackTrace();
         }
     }
+
+    /**
+     *Genera la clave privada de cifrado asimetrico
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public static PrivateKey leerClavePrivada() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
          PrivateKey pvKey = null;
         try {
@@ -182,6 +217,15 @@ public class Cifrado {
         }
         return pvKey;
     }
+
+    /**
+     *  
+     *Genera la clave publica del cifrado asimetrico
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
     public static PublicKey leerClavePublica() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         byte[] clavePu= hexStringToByteArray(CLAVEPUBLICA);
         X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(clavePu);
@@ -189,7 +233,11 @@ public class Cifrado {
         return keyFactory.generatePublic(publicSpec);
     }
 
-   
+    /**
+     * pasa de String a Byte[]
+     * @param s es un String
+     * @return
+     */
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
@@ -214,7 +262,11 @@ public class Cifrado {
         return ret;
     }
 
-
+    /**
+     * Cifra el mensaje con clave asimetrica
+     * @param mensaje
+     * @return
+     */
     public String  cifrarTexto1(String mensaje) {
         byte[] encodedMessage = null;
         try {
@@ -233,9 +285,7 @@ public class Cifrado {
     }
 
     /**
-     * Descifra un texto con RSA, modo ECB y padding PKCS1Padding (asim�trica) y
-     * lo retorna
-     *
+     * Cifra el mensaje con clave asimetrica
      * @param mensaje El mensaje a descifrar
      * @return El mensaje descifrado
      */
@@ -254,6 +304,11 @@ public class Cifrado {
         return new String(decodedMessage);
     }
 
+    /**
+     * pasa de byte a String
+     * @param bytes
+     * @return
+     */
     public static String byteArrayToHexString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
         for (byte b : bytes) {

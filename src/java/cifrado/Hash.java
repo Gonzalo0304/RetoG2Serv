@@ -7,7 +7,6 @@ package cifrado;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import javax.xml.bind.DatatypeConverter;
 
 /**
@@ -16,6 +15,11 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class Hash {
 
+    /**
+     *Hashea el texto mendiante SHA-256
+     * @param texto
+     * @return
+     */
     public String cifrarTexto(String texto) {
         MessageDigest messageDigest;
         String hash = "";

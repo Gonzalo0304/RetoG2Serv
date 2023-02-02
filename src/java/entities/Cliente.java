@@ -91,7 +91,7 @@ public class Cliente extends Usuario {
         @JsonIgnore
     @ManyToOne
     private Administrador administrador;
-
+//Getters y Setter
     public Float getAltura() {
         return altura;
     }
