@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
 //    @NamedQuery(name = "getAdministradorPorDni", query = "SELECT a FROM Administrador AS a WHERE a.dni = :dni")
   //  ,
+    /**
+     * Consultas Querys de la tabla Administrador
+     */
    @NamedQuery(name = "getAdministradorTodos", query = "SELECT a FROM Administrador AS a")
 })
 @XmlRootElement
