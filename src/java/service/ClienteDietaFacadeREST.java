@@ -58,7 +58,10 @@ public class ClienteDietaFacadeREST{
         return key;
     }
 
-
+/**
+ * Este metodo crea un nuevo clienteDieta
+ * @param entity cliente dieta ha crear
+ */
 
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -69,6 +72,10 @@ public class ClienteDietaFacadeREST{
             Logger.getLogger(ClienteDietaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    /**
+ * Este metodo modifica un  clienteDieta
+     * @param clienteDieta 
+     */
     
         @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -79,7 +86,12 @@ public class ClienteDietaFacadeREST{
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    /**
+     *  * Este metodo elimina un  clienteDieta
+
+     * @param idCliente del cliente ha borrar
+     * @param idDieta de la dieta ha borrar
+     */
      @DELETE
     @Path("GetClienIdDietaId/{idCliente}/{idDieta}")
     //@Consumes({"application/xml"})
@@ -91,7 +103,10 @@ public class ClienteDietaFacadeREST{
         }
     }
 
-
+/**
+ * Este metodo devuelve todas las dietas y los clientes asociados a una
+ * @return coleccion de dietas y clientes
+ */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<ClienteDieta> getClienteDietaTodos() {
@@ -104,7 +119,12 @@ public class ClienteDietaFacadeREST{
         }
         return listaClienteDieta;
     }
-    
+    /**
+     * Este metodo devuelve un cliente con su dieta
+     * @param idCliente del cliente a buscar
+     * @param idDieta de la dieta ha buscar
+     * @return receta y dieta segun los ids introducidos
+     */
     @GET
     @Path("GetClienIdDietaId/{idCliente}/{idDieta}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

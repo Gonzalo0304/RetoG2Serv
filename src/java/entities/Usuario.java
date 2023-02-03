@@ -38,10 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 @NamedQueries({
-       @NamedQuery(name = "getUsuarioTodos", query = "SELECT u FROM Usuario AS u")
-,
-           @NamedQuery(name = "getInicioSesion", query = "SELECT u FROM Usuario AS u WHERE u.nombreAcceso=:nombreAcceso AND u.contrasenia=:contrasenia")
-,
+    @NamedQuery(name = "getUsuarioTodos", query = "SELECT u FROM Usuario AS u")
+    ,
+       @NamedQuery(name = "getInicioSesion", query = "SELECT u FROM Usuario AS u WHERE u.nombreAcceso=:nombreAcceso AND u.contrasenia=:contrasenia")
+    ,
     @NamedQuery(name = "getUsuarioPorEmail", query = "SELECT u FROM Usuario AS u WHERE u.email = :email")
 })
 
@@ -60,13 +60,14 @@ public class Usuario implements Serializable {
     private String apellido;
 
     private String email;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonSerialize(as=Date.class)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ssXXX")
+    @JsonSerialize(as = Date.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
     private Date fechaNac;
     @Enumerated(EnumType.STRING)
     private Tipo tipo;
+
     public String getDni() {
         return dni;
     }
@@ -130,7 +131,6 @@ public class Usuario implements Serializable {
     public void setTipo(Tipo tipo) {
         this.tipo = tipo;
     }
-    
 
     public Usuario() {
         super();
@@ -160,7 +160,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Entities.NewEntity[ id=" + dni + " ]";
     }
-
-
 
 }

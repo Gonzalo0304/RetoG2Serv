@@ -28,16 +28,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+ * RESTful Servicio Web para enseñar las opreaciones CRUD de la Clase Administrador
+ * mendiante la entidad
  * @author Gonzalo
  */
 @Path("entities.administrador")
 public class AdministradorFacadeREST{
    
+    /**
+     * EJB que Hace Referencia a AdministradorInterface
+     */
     @EJB
     private AdministradorInterface ejb;
 
 
+    /**
+     * Metodo POST RESTful crea un objeto de Administrador y lo representa en 
+     * un XML
+     * @param entity 
+     */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void create(Administrador entity) {
@@ -48,6 +57,10 @@ public class AdministradorFacadeREST{
         }
     }
     
+    /**
+     * Metodo POST RESTful crea un objeto de Cliente y lo representa en un XML
+     * @param entity 
+     */
     @POST
     @Path("CrearCliente")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -65,6 +78,10 @@ public class AdministradorFacadeREST{
         }
     }
     
+    /**
+     * Metodo POST RESTful crea un objeto de Dietista y lo representa en un XML
+     * @param entity 
+     */
     @POST
     @Path("CrearDietista")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -76,6 +93,11 @@ public class AdministradorFacadeREST{
         }
     }
 
+    /**
+     * Metodo PUT RESTful modifica un objeto de Administraodr de la base de Datos y
+     * lo representa en un XML
+     * @param entity 
+     */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(Administrador entity) {
@@ -86,6 +108,12 @@ public class AdministradorFacadeREST{
         }
     }
     
+    /**
+     * Metodo PUT RESTful modifica un objeto de Cliente de la base de Datos en
+     * funcion a su id y lo representa en un XML
+     * @param id
+     * @param entity 
+     */
     @PUT
     @Path("CrearCliente/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -97,6 +125,12 @@ public class AdministradorFacadeREST{
         }
     }
     
+    /**
+     * Metodo PUT RESTful modifica un objeto de Dietista de la base de Datos en
+     * funcion a su id y lo representa en un XML
+     * @param id
+     * @param entity 
+     */
     @PUT
     @Path("CrearDietista/{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -108,6 +142,11 @@ public class AdministradorFacadeREST{
         }
     }
 
+    /**
+     * Metodo DELETE RESTful elimina un objeto de la entidad CLiente de la base
+     * de Datos y lo representa en un XML
+     * @param entity 
+     */
     @DELETE
     @Path("DeleteCliente")
     public void remove(Cliente entity) {
@@ -118,6 +157,11 @@ public class AdministradorFacadeREST{
         }
     }
 
+    /**
+     * Metodo DELETE RESTful elimina un objeto de la entidad Dietista de la base
+     * de Datos y lo representa en un XML
+     * @param entity 
+     */
     @DELETE
     @Path("DeleteDietista")
     public void removeDietista( Dietista entity) {
@@ -128,7 +172,12 @@ public class AdministradorFacadeREST{
         }
     }
     
-        @GET
+    /**
+     * Metodo GET RESTful lee todos los objetos de Dieta y lo representa en
+     * un XML
+     * @return 
+     */
+    @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Administrador> getAdministradorTodos() {
 

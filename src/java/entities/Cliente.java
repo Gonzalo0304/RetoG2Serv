@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Gonzalo
+ * @author jon
  */
     
 @Entity
@@ -37,7 +37,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @DiscriminatorValue("Cliente")
 
 @NamedQueries({
+    /**
+     * recupera todos los clientes
+     */
      @NamedQuery(name="getClienteTodos", query= "SELECT c FROM Cliente AS c"),
+     /**
+    * recupera un cliente en especifico por su id
+    */
     @NamedQuery(name="getClientePorId", query= "SELECT c FROM Cliente AS c WHERE c.dni=:idCliente")   
     })
 
@@ -46,12 +52,26 @@ import javax.xml.bind.annotation.XmlTransient;
 //@DiscriminatorColumn(name = "DTYPE", discriminatorType = DiscriminatorType.STRING)
 @XmlRootElement
 public class Cliente extends Usuario {
-    
+    /**
+     * altura del cliente
+     */
     private Float altura;
+    /**
+     * genero del cliente
+     */
     private String genero;
+    /**
+     * imc del cliente
+     */
     private Float imc;
+    /**
+     * estado fisico en el que se encuentra el cliente
+     */
     @Enumerated(EnumType.STRING)
     private EstadoFisico ESTADOFISICO;
+    /**
+     * peso del cliente
+     */
     private Float peso;
 
     /**
@@ -59,13 +79,19 @@ public class Cliente extends Usuario {
      */
     @OneToMany(fetch = FetchType.EAGER, cascade=ALL,mappedBy = "cliente")
     private Collection<ClienteDieta> listaDieta;
+    /**
+     * diestista que tiene asociado el cliente
+     */
     @JsonIgnore
     @ManyToOne
     private Dietista dietista;
+     /**
+     * administrador que ha creado el cliente
+     */
         @JsonIgnore
     @ManyToOne
     private Administrador administrador;
-
+//Getters y Setter
     public Float getAltura() {
         return altura;
     }

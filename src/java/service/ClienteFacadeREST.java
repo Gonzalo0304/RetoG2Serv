@@ -36,7 +36,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author josue
+ * @author jon
  */
 
 @Path("entities.cliente")
@@ -51,7 +51,10 @@ public class ClienteFacadeREST  {
     public ClienteFacadeREST() {
        
     }
-    
+    /**
+     * Este método devuelve una colección con todos los clientes existentes.
+     * @return coleccion de clientes
+     */
         @GET
      // @Path("nombreDietistae")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -65,7 +68,11 @@ public class ClienteFacadeREST  {
         }
         return clientes;
     }
-    
+    /**
+ * Este método devuelve el cliente que tenga un ID específico.
+     * @param id
+     * @return cliente con ese id
+     */
    @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -79,7 +86,10 @@ public class ClienteFacadeREST  {
         }
         return cliente;
     }
-    
+    /**
+    * Este metodo crea un cliente
+     * @param cliente 
+     */
     
     @POST
    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -97,7 +107,10 @@ public class ClienteFacadeREST  {
          }
    }
     
-   
+   /**
+    * Este metodo actualiza un cliente
+    * @param cliente 
+    */
      @PUT
      @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
      public void modificarCliente(Cliente cliente){
@@ -107,7 +120,10 @@ public class ClienteFacadeREST  {
              Logger.getLogger(RecetaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
          }
      }
-     
+     /**
+      * Este metodo borra un cliente 
+      * @param id del cliente ha eliminar
+      */
      @DELETE
     // @Consumes({"application/xml"})
       @Path("{id}")
@@ -121,58 +137,5 @@ public class ClienteFacadeREST  {
         }
     }  
     
-/**
-    @POST
-    @Override
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void create(Cliente entity) {
-        super.create(entity);
-    }
 
-    @PUT
-    @Path("{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") String id, Cliente entity) {
-        super.edit(entity);
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") String id) {
-        super.remove(super.find(id));
-    }
-
-    @GET
-    @Path("{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Cliente find(@PathParam("id") String id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> findAll() {
-        return super.findAll();
-    }
-
-    @GET
-    @Path("{from}/{to}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public List<Cliente> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
-    }
-
-    @GET
-    @Path("count")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String countREST() {
-        return String.valueOf(super.count());
-    }
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
-    **/
 }

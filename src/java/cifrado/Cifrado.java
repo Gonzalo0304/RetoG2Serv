@@ -12,6 +12,8 @@ import java.nio.file.Files;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -29,29 +31,42 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
+
 import javax.crypto.spec.SecretKeySpec;
+import javax.sound.sampled.AudioFormat;
+import javax.xml.bind.DatatypeConverter;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  *
  * @author josue
  */
 public class Cifrado {
+    //Claves 
+    private static final String CLAVEPRIVADA= ResourceBundle.getBundle("cifrado.clavePrivada").getString("clave");
+    private static final String CLAVEPUBLICA= ResourceBundle.getBundle("cifrado.clavePublica").getString("clave");
+
+    
 
     //private static final ResourceBundle configFile = ResourceBundle.getBundle("clave.properties");
     private static byte[] salt = "esta es la salt!".getBytes();
     private byte[] iv;
-    private static String clave = "abcd1234";
+    private static String clave = "abcd*1234";
 
+    /**
+     *Genera Contraseña
+     * @return
+     */
     public String generarContra() {
-        Mail mail = new Mail();
         String mensaje = aleatorioContraseña();
         return mensaje;
     }
 
+    /**
+     * Crear un contraseña aleatoria
+     * @return
+     */
     public String aleatorioContraseña() {
         int limitarIzq = 48; // numero '0'
         int limitarDrch = 90; // letra 'Z
@@ -68,92 +83,86 @@ public class Cifrado {
 
     }
 
+    /**
+     * llama al metodo hash para hashear un mensaje 
+     * @param mensaje es un String
+     * @return
+     */
     public String hashearMensaje(String mensaje) {
         Hash hash = new Hash();
         String hasheado = hash.cifrarTexto(mensaje);
         return hasheado;
     }
 
+    /**
+     * genera la clave simetrica
+     * @return
+     */
+    public SecretKey  addKey(){
+        byte[] valuebytes = clave.getBytes();            
+       SecretKey key = new SecretKeySpec( Arrays.copyOf( valuebytes, 16 ) , "AES" );      
+    return key;
+    }
+    
+    /**
+     *Cifra el mensaje mediante clave simetrica
+     * @param mensaje
+     * @return
+     */
     public String cifrarTexto(String mensaje) {
-              String ret = null;
-        KeySpec keySpec = null;
-        SecretKeyFactory secretKeyFactory = null;
+                String value="";
         try {
-
-            // Obtenemos el keySpec           
-            keySpec = new PBEKeySpec(clave.toCharArray(), salt, 65536, 128); // AES-128
-
-            // Obtenemos una instancide de SecretKeyFactory con el algoritmo "PBKDF2WithHmacSHA1"
-            // Generamos la clave
-            secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            byte[] key = secretKeyFactory.generateSecret(keySpec).getEncoded();
-
-            // Creamos un SecretKey usando la clave + salt
-            SecretKey privateKey = new SecretKeySpec(key, "AES");// AES;
-
-            // Obtenemos una instancide de Cipher con el algoritmos que vamos a usar "AES/CBC/PKCS5Padding"
-                    Cipher cipher= Cipher.getInstance("AES/CBC/PKCS5Padding");
-                    
-        // Iniciamos el Cipher en ENCRYPT_MODE y le pasamos la clave privada
-            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-            // Le decimos que cifre (método doFinal())
-            byte[] encodedMessage= cipher.doFinal(mensaje.getBytes());
-// Obtenemos el vector CBC del Cipher (método getIV())
-                    byte[] iv=cipher.getIV();
-// Guardamos el mensaje codificado: IV (16 bytes) + Mensaje
-                    byte[] combined = concatArrays(
-            iv,encodedMessage);
-            // Escribimos el fichero cifrado 
-            //fileWriter("contra.properties", combined);
-
-            // Retornamos el texto cifrado
-            ret = new String(encodedMessage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            Cipher cipher;  
+            cipher = Cipher.getInstance( "AES" );             
+            cipher.init( Cipher.ENCRYPT_MODE, addKey() );             
+            byte[] textobytes = mensaje.getBytes();
+            byte[] cipherbytes = cipher.doFinal( textobytes );
+            value = new BASE64Encoder().encode( cipherbytes );
+        } catch (NoSuchAlgorithmException ex) {
+            System.err.println( ex.getMessage() );
+        } catch (NoSuchPaddingException ex) {
+            System.err.println( ex.getMessage() );
+        } catch (InvalidKeyException ex) {
+            System.err.println( ex.getMessage() );
+        } catch (IllegalBlockSizeException ex) {
+            System.err.println( ex.getMessage() );
+        } catch (BadPaddingException ex) {
+            System.err.println( ex.getMessage() );
         }
-        return ret;
+        return value;
+        
 
     }
 
-        public String descifrarTexto(String fichero){
-        String ret = null;
-
-        // Fichero leído
-        byte[] fileContent = fileReader(fichero); // Path del fichero EjemploAES.dat
-        KeySpec keySpec = null;
-        SecretKeyFactory secretKeyFactory = null;
+    /**
+     *Descifra el mensaje con clave simetrica
+     * @param mensaje
+     * @return
+     */
+    public String descifrarTexto(String mensaje) {
+        String str="";        
         try {
-            // Obtenemos el keySpec
-            keySpec = new PBEKeySpec(clave.toCharArray(),salt,65536,128); // AES-128
+                        Cipher cipher;  
 
-            // Obtenemos una instancide de SecretKeyFactory con el algoritmo "PBKDF2WithHmacSHA1"
-            secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            // Generamos la clave
-            byte[] key = secretKeyFactory.generateSecret(keySpec).getEncoded();
-
-            // Creamos un SecretKey usando la clave + salt
-            SecretKey privateKey = new SecretKeySpec(key, "AES");
-
-            // Obtenemos una instancide de Cipher con el algoritmos que vamos a usar "AES/CBC/PKCS5Padding"
-            Cipher cipher= Cipher.getInstance("AES/CBC/PKCS5Padding");
-            
-            // Leemos el fichero codificado 
-            IvParameterSpec ivParam = new IvParameterSpec(Arrays.copyOfRange(fileContent, 0, 16));
-            // Iniciamos el Cipher en ENCRYPT_MODE y le pasamos la clave privada
-
-            cipher.init(Cipher.DECRYPT_MODE,privateKey,ivParam);
-            // Iniciamos el Cipher en ENCRYPT_MODE y le pasamos la clave privada y el ivParam
-            // Le decimos que descifre
-            byte[] decodedMessage = cipher.doFinal(Arrays.copyOfRange(fileContent, 16, fileContent.length));
-
-            // Texto descifrado
-            ret = new String(decodedMessage);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            byte[] value = new BASE64Decoder().decodeBuffer(mensaje);                 
+            cipher = Cipher.getInstance("AES");            
+            cipher.init( Cipher.DECRYPT_MODE, addKey() );
+            byte[] cipherbytes = cipher.doFinal( value );
+            str = new String( cipherbytes );                                  
+        } catch (InvalidKeyException ex) {
+            System.err.println( ex.getMessage() );
+        }  catch (IllegalBlockSizeException ex) {
+            System.err.println( ex.getMessage() );
+        } catch (BadPaddingException ex) {
+            System.err.println( ex.getMessage() );            
+        }   catch (IOException ex) {
+            System.err.println( ex.getMessage() );
+        }catch (NoSuchAlgorithmException ex) {
+            System.err.println( ex.getMessage() );
+        } catch (NoSuchPaddingException ex) {
+            System.err.println( ex.getMessage() );
         }
-        return ret;
+        return str;  
     }
 
     /**
@@ -187,17 +196,18 @@ public class Cifrado {
         }
     }
 
-    public static PublicKey leerClavePublica(String filename) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(fileReader(filename));
-        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        return keyFactory.generatePublic(publicSpec);
-    }
-
-  /**  public static PrivateKey leerClavePrivada() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        PrivateKey pvKey = null;
+    /**
+     *Genera la clave privada de cifrado asimetrico
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PrivateKey leerClavePrivada() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+         PrivateKey pvKey = null;
         try {
             // Obtener los bytes del archivo donde este guardado la llave publica
-            byte[] pvKeyBytes = hexStringToByteArray(configFile.getString("PRIVATEKEY"));
+            byte[] pvKeyBytes = hexStringToByteArray(CLAVEPRIVADA);
             //
             PKCS8EncodedKeySpec encPvKeySpec = new PKCS8EncodedKeySpec(pvKeyBytes);
             //
@@ -207,7 +217,27 @@ public class Cifrado {
         }
         return pvKey;
     }
-*/
+
+    /**
+     *  
+     *Genera la clave publica del cifrado asimetrico
+     * @return
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PublicKey leerClavePublica() throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        byte[] clavePu= hexStringToByteArray(CLAVEPUBLICA);
+        X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(clavePu);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        return keyFactory.generatePublic(publicSpec);
+    }
+
+    /**
+     * pasa de String a Byte[]
+     * @param s es un String
+     * @return
+     */
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
@@ -217,7 +247,8 @@ public class Cifrado {
         }
         return data;
     }
-        /**
+
+    /**
      * Retorna una concatenaci�n de ambos arrays
      *
      * @param array1
@@ -230,5 +261,62 @@ public class Cifrado {
         System.arraycopy(array2, 0, ret, array1.length, array2.length);
         return ret;
     }
- 
+
+    /**
+     * Cifra el mensaje con clave asimetrica
+     * @param mensaje
+     * @return
+     */
+    public String  cifrarTexto1(String mensaje) {
+        byte[] encodedMessage = null;
+        try {
+
+            //Generamos una instancia de KeyFactory para el algoritmo RSA
+
+            //Ciframos el mensaje con el algoritmo RSA modo ECB y padding PKCS1Padding
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.ENCRYPT_MODE, leerClavePublica());
+            encodedMessage = cipher.doFinal(mensaje.getBytes());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return byteArrayToHexString(encodedMessage);
+    }
+
+    /**
+     * Cifra el mensaje con clave asimetrica
+     * @param mensaje El mensaje a descifrar
+     * @return El mensaje descifrado
+     */
+    public String descifrarTexto1(String mensaje) {
+        byte[] decodedMessage = null;
+        byte[] contrasenia= hexStringToByteArray(mensaje);
+        try {
+            //Desciframos el mensaje con el algoritmo RSA modo ECB y padding PKCS1Padding
+            Cipher cipher = Cipher.getInstance("RSA");
+            cipher.init(Cipher.DECRYPT_MODE, leerClavePrivada());
+            decodedMessage = cipher.doFinal(contrasenia);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new String(decodedMessage);
+    }
+
+    /**
+     * pasa de byte a String
+     * @param bytes
+     * @return
+     */
+    public static String byteArrayToHexString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
+    
+
 }

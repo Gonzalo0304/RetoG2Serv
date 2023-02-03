@@ -4,23 +4,15 @@
  * and open the template in the editor.
  */
 package service;
-
-import cifrado.Cifrado;
-import cifrado.Hash;
-import entities.Alimento;
 import entities.Dietista;
 import excepciones.CreateException;
 import excepciones.DeleteException;
 import excepciones.ReadException;
 import excepciones.UpdateException;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,7 +24,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+  * RESTful Servicio Web para enseñar las opreaciones CRUD de la Clase Dietista
+ * mendiante la entidad
  * @author josue
  */
 @Path("entities.dietista")
@@ -45,8 +38,9 @@ public class DietistaFacadeREST {
     private DietistaInterface ejb;
 
     /**
-     *
-     * @return
+     * Metodo GET RESTful lee todos los objetos de Dietista y lo representa en
+     * un XML
+     * @return Devuelve una lista de Dietistas que contiene Datos
      */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -62,9 +56,10 @@ public class DietistaFacadeREST {
     }
 
     /**
-     *
-     * @param dni
-     * @return
+     * Metodo GET RESTful lee un objeto Dietista por su dni y lo representa en un
+     * XML
+     * @param dni es un String
+     * @return Devuelve un objeto Dietista con Datos
      */
     @GET
     @Path("{dni}")
@@ -80,20 +75,14 @@ public class DietistaFacadeREST {
         return dietista;
     }
 
-    /**
-     *
-     * @param dietista
+   /**
+     * Metodo POST RESTful crea un objeto de Dietista y lo representa en un XML
+     * @param dietista Es un Objeto de la entidad Dietista
      */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearDietista(Dietista dietista) {
         try {
-            Cifrado cifrado = new Cifrado();
-            String contrasenia;
-            //contrasenia= cifrado.descifrarTexto(usuario.getContrasenia());
-            contrasenia = cifrado.hashearMensaje(dietista.getContrasenia());
-            dietista.setContrasenia(contrasenia);
-            dietista.setContrasenia(contrasenia);
             ejb.crearDietista(dietista);
         } catch (CreateException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,8 +90,9 @@ public class DietistaFacadeREST {
     }
 
     /**
-     *
-     * @param dietista
+     * Metodo PUT RESTful modifica un objeto de Dietista de la base de Datos y
+     * lo representa en un XML
+     * @param dietista Es un objeto de la entidad Dietista
      */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -115,8 +105,9 @@ public class DietistaFacadeREST {
     }
 
     /**
-     *
-     * @param dni
+     * Metodo DELETE RESTful elimina un objeto de la entidad Dietista de la base
+     * de Datos y lo representa en un XML
+     * @param dni Es un String
      */
     @DELETE
     @Path("{dni}")

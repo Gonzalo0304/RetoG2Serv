@@ -6,10 +6,6 @@
 package service;
 
 import cifrado.Cifrado;
-import cifrado.Hash;
-import cifrado.Mail;
-import entities.Alimento;
-import entities.Dietista;
 import entities.Usuario;
 import excepciones.CreateException;
 import excepciones.DeleteException;
@@ -20,9 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -34,7 +27,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 /**
- *
+  * RESTful Servicio Web para enseñar las opreaciones CRUD de la Clase Usuario
+ * mendiante la entidad
  * @author josue
  */
 @Path("entities.usuario")
@@ -47,8 +41,9 @@ public class UsuarioFacadeREST {
     private UsuarioInterface ejb;
 
     /**
-     *
-     * @return
+     * Metodo GET RESTful lee todos los objetos de Usuario y lo representa en
+     * un XML
+     * @return Devuelve una lista de Usuarios que contiene Datos
      */
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -63,39 +58,37 @@ public class UsuarioFacadeREST {
         return usuarios;
     }
 
-    /**
-     *
-     * @param dni
-     * @return
+   /**
+     * Metodo GET RESTful lee un objeto usuario por su dni y lo representa en un
+     * XML
+     * @param dni es un String
+     * @return Devuelve un objeto usuario con Datos
      */
-    /**
+    
     @GET
     @Path("{dni}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Usuario getUsuarioPorDni(@PathParam("dni") String dni) {
-        Usuario usuario = null;
+        Usuario usuario
+                = null;
 
         try {
             usuario = ejb.getUsuarioPorDni(dni);
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE,
+                    null, ex);
         }
         return usuario;
     }
-*/
-    /**
-     *
-     * @param dietista
+
+  /**
+     * Metodo POST RESTful crea un objeto de Usuario y lo representa en un XML
+     * @param usuario Es un Objeto de la entidad Usuario
      */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void crearUsuario(Usuario usuario) {
         try {
-            Cifrado cifrado = new Cifrado();
-            String contrasenia;
-            //contrasenia= cifrado.descifrarTexto(usuario.getContrasenia());
-            contrasenia = cifrado.hashearMensaje(usuario.getContrasenia());
-            usuario.setContrasenia(contrasenia);
             ejb.crearUsuario(usuario);
         } catch (CreateException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,22 +96,25 @@ public class UsuarioFacadeREST {
     }
 
     /**
-     *
-     * @param dietista
+     * Metodo PUT RESTful modifica un objeto de Usuario de la base de Datos y
+     * lo representa en un XML
+     * @param usuario Es un objeto de la entidad Usuario
      */
     @PUT
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void actualizarUsuario(Usuario usuario) {
         try {
             ejb.modificarUsuario(usuario);
+
         } catch (UpdateException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     /**
-     *
-     * @param dni
+     * Metodo DELETE RESTful elimina un objeto de la entidad Usuario de la base
+     * de Datos y lo representa en un XML
+     * @param dni Es un String
      */
     @DELETE
     @Path("{dni}")
@@ -130,55 +126,38 @@ public class UsuarioFacadeREST {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-        @GET
-    @Path("{email}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Collection<Usuario> getUsuarioPorEmail(@PathParam("email") String email) {
-        List<Usuario> usuario = null;
-
-
+    /**
+     * Metodo PUT RESTful modifica un objeto de Usuario que busca atravez del correo en la base de Datos y
+     * lo representa en un XML
+     * @param correo Es un objeto de la entidad Alimento
+     */
+    @PUT
+    @Path("{correo}")
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public void getUsuarioPorEmail(@PathParam("correo") String correo) {
         try {
-            
-            usuario = (List<Usuario>) ejb.getUsuarioPorEmail(email);
-            
-            
-            //recuperarContrasenia(usuario.get(0));
+            ejb.getUsuarioPorEmail(correo);
         } catch (ReadException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return usuario;
     }
-
-    public void recuperarContrasenia(Usuario usuario) {
-        String contrasenia = null,contrasenia2=null;
-
-        try {
-            Mail mail= new Mail();
-            Cifrado cifrado= new Cifrado();           
-            contrasenia= cifrado.generarContra();
-            mail.mandarMail(usuario.getEmail(), contrasenia);
-            contrasenia2= cifrado.hashearMensaje(contrasenia);
-            usuario.setContrasenia(contrasenia2);           
-            ejb.modificarUsuario(usuario);
-            
-        } catch (UpdateException ex) {
-            Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-            @GET
+  /**
+     * Metodo GET RESTful lee todos los objetos de Usuario por su nombre de acceso y contraseña  y lo
+     * representa en un XML
+     * @param nombreAcceso es un String a leer
+     * @param contrasenia es un String a leer
+     * @return Devuelve una lista de tipo alimento que contiene datos
+     */
+    @GET
     @Path("{nombreAcceso}/{contrasenia}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Collection<Usuario> getInicioSesion(@PathParam("nombreAcceso") String nombreAcceso, @PathParam("contrasenia") String contrasenia) {
         List<Usuario> usuario = null;
 
-
         try {
-                        Cifrado cifrado = new Cifrado();
-            contrasenia= cifrado.hashearMensaje(contrasenia);
-            usuario = (List<Usuario>) ejb.getInicioSesion(nombreAcceso,contrasenia);
-            
+
+            usuario = (List<Usuario>) ejb.getInicioSesion(nombreAcceso, contrasenia);
+
         } catch (ReadException ex) {
             Logger.getLogger(AlimentoFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -186,6 +165,4 @@ public class UsuarioFacadeREST {
     }
 
 
-    }
-    
-
+}
