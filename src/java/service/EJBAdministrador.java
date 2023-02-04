@@ -25,7 +25,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBAdministrador implements AdministradorInterface {
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
+    @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
 
     /**

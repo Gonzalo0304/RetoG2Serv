@@ -23,7 +23,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBAlimentoReceta implements AlimentoRecetaInterface {
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
+    @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
 
     /**

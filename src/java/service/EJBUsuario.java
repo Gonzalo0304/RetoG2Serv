@@ -27,7 +27,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBUsuario implements UsuarioInterface {
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
+    @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
     /**
      * Crea un Objeto Usuario en la base de Datos

@@ -26,7 +26,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBCliente implements ClienteInterface{
     
-    @PersistenceContext(unitName = "Reto2G2ServPU")
+    @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
     /**
      * Este método devuelve una colección con todos los clientes existentes.

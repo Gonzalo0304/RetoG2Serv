@@ -18,7 +18,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBAlimento implements AlimentoInterface {
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
+    @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
 
     /**

@@ -25,7 +25,7 @@ import javax.persistence.PersistenceContext;
 
 public class EJBDietista implements DietistaInterface {
 
-    @PersistenceContext(unitName = "Reto2G2ServPU")
+    @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
     /**
      * Crea un Objeto Dietista en la base de Datos

@@ -23,7 +23,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class EJBClienteDieta implements ClienteDietaInterface{
     
-     @PersistenceContext(unitName = "Reto2G2ServPU")
+     @PersistenceContext(unitName = "RetoG2Serv")
     private EntityManager em;
 /**
  * Este método crea un cliente con su dieta
